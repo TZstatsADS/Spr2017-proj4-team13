@@ -1,21 +1,22 @@
-#library(mlbench)
-
-#set.seed(111)
-#obj = mlbench.spirals(100,1,0.025)
-#my.dat =  4 * obj$x
-#plot(my.dat)
+library(mlbench)
+set.seed(111)
+obj = mlbench.spirals(100,1,0.025)
+my.dat =  4 * obj$x
+plot(my.dat)
 
 library(stats)
+library(expm)
 #This is a function that performs the spectral cluster algorithm
-#Package needed: stats
+#Package needed: stats, expm
 #Input: 
       #my.dat: data matrix
       #n.line: numerical values indicating how many lines to de drawn for each point
       #n.cluster: numerical value indeicates the number of clusters
+      #A boolean variable indicating whether to calculate a normalized laplacian
 #output:
       #km.ouput: A k-means object that contains clluster results
 
-Spectral.Cluster = function(my.dat,n.line=2,n.cluster=2) {
+Spectral.Cluster = function(my.dat,n.line=2,n.cluster=2,normal = F) {
   
   Nrow = nrow(my.dat)
   
@@ -42,14 +43,19 @@ Spectral.Cluster = function(my.dat,n.line=2,n.cluster=2) {
       }
     }
   
-  #COnstruct degree matrix Degree
+  #COnstruct degree matrix Degree   #Not sure since this part
   Degree = diag(apply(Affinity,1,sum))
   
   #Construct unnormalizaed graph Laplacian
   Lap = Degree - Affinity
   
+  if(normal){
+  #Construct normalizaed graph Laplacian
+  Lap = (Degree %^% (-1/2)) %*% Lap %*% (Degree %^% (-1/2))
+  }
+  
   ev = eigen(Lap, symmetric=TRUE)#find eigenvectors for the Laplacian
-  Final   = evL$vectors[,(ncol(ev$vectors)-n.cluster+1):ncol(ev$vectors)]#Locate the k smallest eigenvectors to construct final matrix 
+  Final   = ev$vectors[,(ncol(ev$vectors)-n.cluster+1):ncol(ev$vectors)]#Locate the n.cluster smallest eigenvectors to construct final matrix 
   
   #perform k-means algorithm to cluster the final matrix
   km.ouput = kmeans(Final, centers=n.cluster, nstart=5)
@@ -57,7 +63,8 @@ Spectral.Cluster = function(my.dat,n.line=2,n.cluster=2) {
   return(km.ouput)  
 }
 
-#A = make.affinity(my.dat,3,2) 
+A = Spectral.Cluster(my.dat,n.line=3,n.cluster=2,normal = F) 
+B = Spectral.Cluster(my.dat,n.line=3,n.cluster=2,normal = T) 
 
 
-#plot(my.dat, col=A$cluster)
+plot(my.dat, col=A$cluster)
