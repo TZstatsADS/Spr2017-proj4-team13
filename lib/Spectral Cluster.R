@@ -2,7 +2,6 @@ library(mlbench)
 set.seed(111)
 obj = mlbench.spirals(100,1,0.025)
 my.dat =  4 * obj$x
-plot(my.dat)
 
 
 #This is a function that performs the spectral cluster algorithm
@@ -69,4 +68,12 @@ A = Spectral.Cluster(my.dat,n.line=3,n.cluster=2,normal = F)
 B = Spectral.Cluster(my.dat,n.line=3,n.cluster=2,normal = T) 
 
 
-plot(my.dat, col=A$cluster)
+#mrofw(c(1,2))
+par(mfrow=c(1,2))
+plot(my.dat,main="Original")
+plot(my.dat, col=A$cluster,main="Unnormalized Lap")
+
+par(mfrow=c(1,2))
+plot(my.dat,main="Original")
+plot(my.dat, col=B$cluster,main="normalized Lap")
+
