@@ -4,19 +4,21 @@ obj = mlbench.spirals(100,1,0.025)
 my.dat =  4 * obj$x
 plot(my.dat)
 
-library(stats)
-library(expm)
+
 #This is a function that performs the spectral cluster algorithm
 #Package needed: stats, expm
 #Input: 
       #my.dat: data matrix
       #n.line: numerical values indicating how many lines to de drawn for each point
       #n.cluster: numerical value indeicates the number of clusters
-      #A boolean variable indicating whether to calculate a normalized laplacian
+      #A boolean variable indicating whether to calculate a normalized laplacian matrix
 #output:
       #km.ouput: A k-means object that contains clluster results
 
-Spectral.Cluster = function(my.dat,n.line=2,n.cluster=2,normal = F) {
+library(stats)
+library(expm)
+
+Spectral.Cluster = function(my.dat,n.line=3,n.cluster=2,normal = F) {
   
   Nrow = nrow(my.dat)
   
