@@ -39,7 +39,7 @@ make.affinity <- function(my.data,n.neighboors=2,k=2) {
   
   D = diag(apply(Affinity,1,sum))
   
-  U = D - A
+  U = D - Affinity
   evL <- eigen(U, symmetric=TRUE)
   Z   <- evL$vectors[,(ncol(evL$vectors)-k+1):ncol(evL$vectors)]
   km <- kmeans(Z, centers=k, nstart=5)
