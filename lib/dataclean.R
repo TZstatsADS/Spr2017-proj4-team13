@@ -17,6 +17,11 @@ gatherinfo<-function(filename){
 }
 
 AGupta<-gatherinfo(AGupta)
+#################### Changes Recommendation####################
+#Possible Changes suggestions....ubable to load your Rdata file
+#AGupta = as.data.frame(AGupta)
+#save(object = AGupta, file="../data/AGupta.Rdata")
+###############################################################
 write.csv(AGupta,"AGupta.Rdata", row.names = F)
 
 AKumar<-gatherinfo(AKumar)
