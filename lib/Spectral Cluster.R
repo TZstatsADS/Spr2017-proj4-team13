@@ -1,7 +1,7 @@
-#library(mlbench)
-#set.seed(111)
-#obj = mlbench.spirals(100,1,0.025)
-#my.dat =  4 * obj$x
+library(mlbench)
+set.seed(111)
+obj = mlbench.spirals(100,1,0.025)
+my.dat =  4 * obj$x
 
 
 #This is a function that performs the spectral cluster algorithm
@@ -56,6 +56,8 @@ Spectral.Cluster = function(my.dat,n.line=3,n.cluster=2,normal = F) {
   }
   
   ev = eigen(Lap, symmetric=TRUE)#find eigenvectors for the Laplacian
+  
+  #Final   = ev$vectors[,1:n.cluster]#Locate the n.cluster largest eigenvectors to construct final matrix
   Final   = ev$vectors[,(ncol(ev$vectors)-n.cluster+1):ncol(ev$vectors)]#Locate the n.cluster smallest eigenvectors to construct final matrix 
   
   #perform k-means algorithm to cluster the final matrix
@@ -64,16 +66,15 @@ Spectral.Cluster = function(my.dat,n.line=3,n.cluster=2,normal = F) {
   return(km.ouput)  
 }
 
-#A = Spectral.Cluster(my.dat,n.line=3,n.cluster=2,normal = F) 
-#B = Spectral.Cluster(my.dat,n.line=3,n.cluster=2,normal = T) 
+A = Spectral.Cluster(my.dat,n.line=3,n.cluster=2,normal = F) 
+B = Spectral.Cluster(my.dat,n.line=3,n.cluster=2,normal = T) 
 
 
-#mrofw(c(1,2))
-#par(mfrow=c(1,2))
-#plot(my.dat,main="Original")
-#plot(my.dat, col=A$cluster,main="Unnormalized Lap")
+par(mfrow=c(1,2))
+plot(my.dat,main="Original")
+plot(my.dat, col=A$cluster,main="Unnormalized Lap")
 
-#par(mfrow=c(1,2))
-#plot(my.dat,main="Original")
-#plot(my.dat, col=B$cluster,main="normalized Lap")
+par(mfrow=c(1,2))
+plot(my.dat,main="Original")
+plot(my.dat, col=B$cluster,main="normalized Lap")
 
