@@ -22,6 +22,7 @@ Spectral.Cluster = function(my.dat,sigma = 1, n.cluster=2) {
   
   #Construct Affinity matrix
   Affinity = matrix(rep(0,Nrow^2), ncol=Nrow)
+  
   for(i in 1 : Nrow){
     for(j in 1 : Nrow){
       if(i != j){
