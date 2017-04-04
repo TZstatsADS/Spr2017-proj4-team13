@@ -23,6 +23,7 @@ gatherinfo<-function(filename){
 
 #################### Modifications ############################
 #Possible modifications....unable to load your Rdata file
+#Please set directory to lib folder in order for the path "../data/" to work
 #AGupta<-gatherinfo("AGupta")
 #AGupta<-as.data.frame(AGupta)
 #save(object = AGupta, file="../data/AGupta.Rdata")
