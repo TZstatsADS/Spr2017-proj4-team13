@@ -1,9 +1,13 @@
 setwd("~/Desktop/5243 ADS/proj4/Spr2017-proj4-team13-master/data/nameset")
-# setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/Spr2017-proj4-team13/lib")
+#setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/Spr2017-proj4-team13/lib")
 
 gatherinfo<-function(filename){
   name<-deparse(substitute(filename))
   filename<- read.csv(paste0(name,".txt"), header = F, sep = ">")
+  ##############Possible Modifications#####################
+  #name <- paste0("../data/nameset/",filename,".txt")
+  #filename<- read.csv(name,header = F, sep = ">")
+  #########################################################
   colnames(filename) <- c("Coauthor", "Paper", "Journal")
   filename$AuthorID <- sub("_.*","",filename$Coauthor)
   filename$Coauthor <- gsub("<","",sub("^.*?\\s","", filename$Coauthor))
@@ -16,12 +20,15 @@ gatherinfo<-function(filename){
   return(filename)
 }
 
-AGupta<-gatherinfo(AGupta)
+
 #################### Modifications ############################
 #Possible modifications....unable to load your Rdata file
-#AGupta = as.data.frame(AGupta)
+#AGupta<-gatherinfo("AGupta")
+#AGupta<-as.data.frame(AGupta)
 #save(object = AGupta, file="../data/AGupta.Rdata")
+#load("../data/AGupta.Rdata")
 ###############################################################
+AGupta<-gatherinfo(AGupta)
 write.csv(AGupta,"AGupta.Rdata", row.names = F)
 
 AKumar<-gatherinfo(AKumar)
