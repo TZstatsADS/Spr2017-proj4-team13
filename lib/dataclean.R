@@ -1,5 +1,5 @@
 setwd("~/Desktop/5243 ADS/proj4/Spr2017-proj4-team13-master/data/nameset")
-
+# setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/Spr2017-proj4-team13/lib")
 
 gatherinfo<-function(filename){
   name<-deparse(substitute(filename))
@@ -17,8 +17,8 @@ gatherinfo<-function(filename){
 }
 
 AGupta<-gatherinfo(AGupta)
-#################### Changes Recommendation####################
-#Possible Changes suggestions....ubable to load your Rdata file
+#################### Modifications ############################
+#Possible modifications....unable to load your Rdata file
 #AGupta = as.data.frame(AGupta)
 #save(object = AGupta, file="../data/AGupta.Rdata")
 ###############################################################
