@@ -1,9 +1,3 @@
-#library(mlbench)
-#set.seed(111)
-#obj = mlbench.spirals(100,1,0.025)
-#my.dat =  4 * obj$x
-
-
 #This is a function that performs the spectral cluster algorithm using QR decomposition to assign clusters
 #Package needed:  expm
 #Input: 
@@ -77,20 +71,4 @@ Spectral.Cluster = function(my.dat, n.cluster=2) {
   
   return(cluster)  
 }
-#cluster = Spectral.Cluster(my.dat)
-#A = Spectral.Cluster(my.dat,n.line=3,n.cluster=2,normal = F) 
-#B = Spectral.Cluster(my.dat,n.line=3,n.cluster=2,normal = T) 
 
-#plot = data.frame(x=my.dat[,1],y=my.dat[,2],class = cluster)
-
-#par(mfrow=c(1,2))
-#plot(my.dat,main="Original")
-#plot(x = plot$x, y = plot$y, col=plot$class,main="Spectral Cluster with QR")
-
-
-
-#library(stats)
-#K = kmeans(my.dat, centers=2,nstart = 5)
-#par(mfrow=c(1,2))
-#plot(x = plot$x, y = plot$y, col=plot$class,main="Spectral Cluster with QR")
-#plot(my.dat, col=K$cluster,main="K means")
