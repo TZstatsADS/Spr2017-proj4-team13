@@ -36,10 +36,14 @@ Spectral.Cluster = function(my.dat,sigma = 1, n.cluster=2) {
   #Construct normalizaed graph Laplacian
   Lap = (Degree %^% (-1/2)) %*% Affinity %*% (Degree %^% (-1/2))
   
+  ev = eigen(Lap, symmetric = TRUE)#Calculate the eigenvectors of Lap
+  
+  #Form matrix X by staking the n.cluster largest eigenvectors from Lap
+  X = ev$vectors[,1:n.cluster]
+  
   #My parts ended
   ##########################################################################################################
-  ev = eigen(Lap, symmetric=TRUE)#find eigenvectors for the Laplacian
-  
+
   
   
   #Final   = ev$vectors[,1:n.cluster]#Locate the n.cluster largest eigenvectors to construct final matrix
