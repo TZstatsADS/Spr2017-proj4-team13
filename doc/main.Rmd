@@ -1,6 +1,6 @@
 ---
-title: "Project 4 - Example Main Script"
-author: "Jing Wu, Tian Zheng"
+title: "Project 4 -  Main Script"
+author: "Boxuan Zhao, Zixuan Guan, Zheren Tang, Yingxin Zhang, Jihan Wei"
 date: "3/22/2017"
 output: pdf_document
 ---
@@ -10,18 +10,29 @@ This file is currently a template for implementing one of the suggested papers, 
 ## Step 0: Load the packages, specify directories
 
 ```{r}
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(text2vec, dplyr, qlcMatrix, kernlab, knitr)
+list.of.packages = c("expm")
 
-setwd("~/Dropbox/Project4_WhoIsWho/doc")
-# here replace it with your own path or manually set it in RStudio
-# to where this rmd file is located
+new.packages = list.of.packages[!(list.of.packages %in% install.packages()[,"Package"])]
+
+if(length(new.packages))
+{
+  install.packages(new.packages)
+}
+
+library("expm")
+
+
+#if (!require("pacman")) install.packages("pacman")
+#pacman::p_load(text2vec, dplyr, qlcMatrix, kernlab, knitr)
+
+ setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/Spr2017-proj4-team13/lib")# here replace it with your own path or manually set it in RStudio to where this rmd file is located
 ```
 
 ## Step 1: Load and process the data
 
 For each record in the dataset, there are some information we want to extract and store them in a regular form: canonical author id, coauthors, paper title, publication venue title. You may need to find regular matched in the input string vectors by using regex in R. Here is a tutorial for regular expression in R, which might help you <https://rstudio-pubs-static.s3.amazonaws.com/74603_76cd14d5983f47408fdf0b323550b846.html>
 
+We will extract all relevant information from data in this chunck
 ```{r}
 AKumar <- data.frame(scan("~/Dropbox/Project4_WhoIsWho/data/nameset/AKumar.txt",
                           what = list(Coauthor = "", Paper = "", Journal = ""),
@@ -95,25 +106,27 @@ dtm_train_tfidf <- fit_transform(dtm_train, tfidf)
 
 ## Step 3: Clustering
 
-Following suggestion in the paper, we carry out spectral clustering on the Gram matrix of the citation vectors by using R function `specc()` in *kernlab*. The number of clusters is assumed known as stated in the paper.
+First of all, we perofrom the spectral cluster with QR decomposition on the data sets
 ```{r}
+source("../lib/Spectral ClusterQR.R")
 start.time <- Sys.time()
-result_sclust <- specc(as.matrix(dtm_train_tfidf), 
-                       centers=length(unique(AKumar$AuthorID)))
+result_sclust <- Spectral.Cluster(my.dat, n.cluster=2)
+  #specc(as.matrix(dtm_train_tfidf), 
+                       #centers=length(unique(AKumar$AuthorID)))
 end.time <- Sys.time()
 time_sclust <- end.time - start.time
 table(result_sclust)
 ```
 
-We can also using hierarchical clustering method under the cosine distance. The intention of using a different clustering method is just to let you know how to compare performance between various methods. 
+Second of all, we imlememnt the algorithm we use from paper 6 to analysis our data set. 
 ```{r}
 start.time <- Sys.time()
-docsdissim <- cosSparse(t(dtm_train_tfidf))
-rownames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
-colnames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
+#docsdissim <- cosSparse(t(dtm_train_tfidf))
+#rownames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
+#colnames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
 #compute pairwise cosine similarities using cosSparse function in package qlcMatrix
-h <- hclust(as.dist(docsdissim), method = "ward.D")
-result_hclust <- cutree(h,length(unique(AKumar$AuthorID)))
+#h <- hclust(as.dist(docsdissim), method = "ward.D")
+#result_hclust <- cutree(h,length(unique(AKumar$AuthorID)))
 end.time <- Sys.time()
 time_hclust <- end.time - start.time
 table(result_hclust)
