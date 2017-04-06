@@ -34,7 +34,7 @@ For each record in the dataset, there are some information we want to extract an
 
 We will extract all relevant information from data in this chunck
 ```{r}
-AKumar <- data.frame(scan("~/Dropbox/Project4_WhoIsWho/data/nameset/AKumar.txt",
+AKumar <- data.frame(scan("data/nameset/AKumar.txt",
                           what = list(Coauthor = "", Paper = "", Journal = ""),
                           sep=">", quiet=TRUE),stringsAsFactors=FALSE)
 # This need to be modified for different name set
