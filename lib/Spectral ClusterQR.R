@@ -1,12 +1,11 @@
 #This is a function that performs the spectral cluster algorithm using QR decomposition to assign clusters
-#Package needed:  expm
+#Package needed:  None
 #Input: 
 #my.dat: a m by n citation data matrix
 #n.cluster: numerical value indeicates the number of clusters indicated
 #output:
 #cluster: A numerical vector that contains cluster results for each observation
 
-library(expm)
 
 Spectral.Cluster = function(my.dat, n.cluster=2) {
   
