@@ -18,6 +18,5 @@ partial_obj <- function(matrix,authorname,yl,A,m)
   
    par1[i] <- sum(par2)+partial_D(x1,yl[i,],A,m)
   }
-  
   return(sum(par1))
 }
