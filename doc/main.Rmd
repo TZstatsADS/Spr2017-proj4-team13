@@ -10,7 +10,7 @@ This file is currently a template for implementing one of the suggested papers, 
 ## Step 0: Load the packages, specify directories
 
 ```{r}
-list.of.packages = c("expm")
+list.of.packages = c("expm","pacman")
 
 new.packages = list.of.packages[!(list.of.packages %in% install.packages()[,"Package"])]
 
@@ -20,10 +20,11 @@ if(length(new.packages))
 }
 
 library("expm")
+library("pacman")
 
 
 #if (!require("pacman")) install.packages("pacman")
-#pacman::p_load(text2vec, dplyr, qlcMatrix, kernlab, knitr)
+pacman::p_load(text2vec, dplyr, qlcMatrix, kernlab, knitr)
 
  setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/Spr2017-proj4-team13/lib")# here replace it with your own path or manually set it in RStudio to where this rmd file is located
 ```
@@ -34,23 +35,38 @@ For each record in the dataset, there are some information we want to extract an
 
 We will extract all relevant information from data in this chunck
 ```{r}
-AKumar <- data.frame(scan("data/nameset/AKumar.txt",
-                          what = list(Coauthor = "", Paper = "", Journal = ""),
-                          sep=">", quiet=TRUE),stringsAsFactors=FALSE)
+#AKumar <- data.frame(scan("data/nameset/AKumar.txt",
+#                          what = list(Coauthor = "", Paper = "", Journal = ""),
+#                          sep=">", quiet=TRUE),stringsAsFactors=FALSE)
 # This need to be modified for different name set
 
 # extract canonical author id befor "_"
-AKumar$AuthorID <- sub("_.*","",AKumar$Coauthor)
+#AKumar$AuthorID <- sub("_.*","",AKumar$Coauthor)
 # extract paper number under same author between "_" and first whitespace
-AKumar$PaperNO <- sub(".*_(\\w*)\\s.*", "\\1", AKumar$Coauthor)
+#AKumar$PaperNO <- sub(".*_(\\w*)\\s.*", "\\1", AKumar$Coauthor)
 # delete "<" in AKumar$Coauthor, you may need to further process the coauthor
 # term depending on the method you are using
-AKumar$Coauthor <- gsub("<","",sub("^.*?\\s","", AKumar$Coauthor))
+#AKumar$Coauthor <- gsub("<","",sub("^.*?\\s","", AKumar$Coauthor))
 # delete "<" in AKumar$Paper
-AKumar$Paper <- gsub("<","",AKumar$Paper)
+#AKumar$Paper <- gsub("<","",AKumar$Paper)
 # add PaperID for furthur use, you may want to combine all the nameset files and 
 # then assign the unique ID for all the citations
-AKumar$PaperID <- rownames(AKumar)
+#AKumar$PaperID <- rownames(AKumar)
+
+AGupta = read.csv("../data/namecsv/AGupta.csv",header = TRUE, stringsAsFactors = FALSE)
+AKumar = read.csv("../data/namecsv/AKumar.csv",header = TRUE, stringsAsFactors = FALSE)
+CChen = read.csv("../data/namecsv/CChen.csv",header = TRUE, stringsAsFactors = FALSE)
+DJohnson = read.csv("../data/namecsv/DJohnson.csv",header = TRUE, stringsAsFactors = FALSE)
+JLee =  read.csv("../data/namecsv/JLee.csv",header = TRUE, stringsAsFactors = FALSE)
+JMartin = read.csv("../data/namecsv/JMartin.csv",header = TRUE, stringsAsFactors = FALSE)
+JRobinson  = read.csv("../data/namecsv/JRobinson.csv",header = TRUE, stringsAsFactors = FALSE)
+JSmith = read.csv("../data/namecsv/JSmith.csv",header = TRUE, stringsAsFactors = FALSE)
+KTanaka = read.csv("../data/namecsv/KTanaka.csv",header = TRUE, stringsAsFactors = FALSE)
+MBrown = read.csv("../data/namecsv/MBrown.csv",header = TRUE, stringsAsFactors = FALSE)
+MJones = read.csv("../data/namecsv/MJones.csv",header = TRUE, stringsAsFactors = FALSE)
+MMiller = read.csv("../data/namecsv/MMiller.csv",header = TRUE, stringsAsFactors = FALSE)
+SLee = read.csv("../data/namecsv/SLee.csv",header = TRUE, stringsAsFactors = FALSE)
+YChen = read.csv("../data/namecsv/YChen.csv",header = TRUE, stringsAsFactors = FALSE)
 ```
 
 ## Step 2: Feature design
@@ -110,7 +126,7 @@ First of all, we perofrom the spectral cluster with QR decomposition on the data
 ```{r}
 source("../lib/Spectral ClusterQR.R")
 start.time <- Sys.time()
-result_sclust <- Spectral.Cluster(my.dat, n.cluster=2)
+result_sclust <- Spectral.Cluster(as.matrix(dtm_train_tfidf), n.cluster=2)
   #specc(as.matrix(dtm_train_tfidf), 
                        #centers=length(unique(AKumar$AuthorID)))
 end.time <- Sys.time()
@@ -121,12 +137,12 @@ table(result_sclust)
 Second of all, we imlememnt the algorithm we use from paper 6 to analysis our data set. 
 ```{r}
 start.time <- Sys.time()
-#docsdissim <- cosSparse(t(dtm_train_tfidf))
-#rownames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
-#colnames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
+docsdissim <- cosSparse(t(dtm_train_tfidf))
+rownames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
+colnames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
 #compute pairwise cosine similarities using cosSparse function in package qlcMatrix
-#h <- hclust(as.dist(docsdissim), method = "ward.D")
-#result_hclust <- cutree(h,length(unique(AKumar$AuthorID)))
+h <- hclust(as.dist(docsdissim), method = "ward.D")
+result_hclust <- cutree(h,length(unique(AKumar$AuthorID)))
 end.time <- Sys.time()
 time_hclust <- end.time - start.time
 table(result_hclust)
