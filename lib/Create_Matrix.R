@@ -60,7 +60,7 @@ Create_X<-function(Filename=AKumar){
   #dim(dtm_Jour_tfidf)
 
   ##Get tfidf matrix by combining all features:
-  tfid_matrix<-cbind(dtm_CoAu_tfidf,dtm_Pap_tfidf,dtm_Jour_tfidf)
+  tfid_matrix<-as.matrix(cbind(dtm_CoAu_tfidf,dtm_Pap_tfidf,dtm_Jour_tfidf))
   return(tfid_matrix)
   }
 
