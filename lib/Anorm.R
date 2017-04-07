@@ -3,6 +3,6 @@
 ### Input: vector, parameter matrix                               ###
 #####################################################################
 
-Anorm <- function(x,A){
-   return(sqrt(t(x)%*%A%*%x))
+Anorm <- function(x1,x2,A){
+   return(t(x1)%*%A%*%x2)
  }
