@@ -4,7 +4,10 @@
 #####################################################################################################
 
 partial_D <- function(x1,x2,A,m){
-  numer <- x1[m]*x2[m]*Anorm(x1,A)*Anorm(x2,A)-t(x1)%*%A%*%x2*((x1[m])^2*(Anorm(x1,A))^2+(x2[m])^2*(Anorm(x2,A))^2)/(2*Anorm(x1,A)*Anorm(x2,A))
-  denom <- (Anorm(x1,A))^2*(Anorm(x2,A))^2
+  Anorm <- function(x1,x2,A){
+    return(t(x1)%*%A%*%x2)
+  }
+  numer <- x1[m]*x2[m]*sqrt(Anorm(x1,x1,A)*Anorm(x2,x2,A))-Anorm(x1,x2,A)*((x1[m])^2*Anorm(x1,x1,A)+(x2[m])^2*Anorm(x2,x2,A))/(2*sqrt(Anorm(x1,x1,A)*Anorm(x2,x2,A)))
+  denom <- Anorm(x1,x1,A)*Anorm(x2,x2,A)
   return(numer/denom)
 }
