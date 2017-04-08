@@ -13,7 +13,7 @@ partial_obj <- function(matrix,authorname,yl,A,m)
       for(j in 1:nrow(matrix))
         {
           x2 <- matrix[j,]
-          par2[j] <- partial_D(x1,x2,A,m)*constraint(i,j,authorname)
+          par2[j] <- partial_D(x1,x2,A,m)*0.7*constraint(i,j,authorname)
         }
   
    par1[i] <- sum(par2)+partial_D(x1,yl[i,],A,m)*(yl*(yl[m]^2)/2)
