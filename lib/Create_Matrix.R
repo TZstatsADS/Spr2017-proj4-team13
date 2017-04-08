@@ -48,7 +48,7 @@ Create_X<-function(Filename=AKumar){
                              c("a", "an", "the", "in", "on", "at", "of", "about", "for"))
 
   vector_Jour <- vocab_vectorizer(vo_Jour)
-  dtm_Jour <- create_dtm(Pap,vector_Jour)
+  dtm_Jour <- create_dtm(Jour,vector_Jour)
 
   ##Get tfidf matrixes respectively
   tfidf <- TfIdf$new()
@@ -61,6 +61,9 @@ Create_X<-function(Filename=AKumar){
 
   ##Get tfidf matrix by combining all features:
   tfid_matrix<-as.matrix(cbind(dtm_CoAu_tfidf,dtm_Pap_tfidf,dtm_Jour_tfidf))
+  
+  ##Get tfidf matrix by row combining all features:
+  #tfid_matrix<-as.matrix(rbind(dtm_CoAu_tfidf,dtm_Pap_tfidf,dtm_Jour_tfidf))
   return(tfid_matrix)
   }
 
