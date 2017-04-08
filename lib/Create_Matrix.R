@@ -1,6 +1,6 @@
 library(text2vec)
 
-AKumar<-read.csv("Testing_File.csv",header = T,as.is=T)
+#AKumar<-read.csv("Testing_File.csv",header = T,as.is=T)
 
 #######################
 ###The Create_X function aims to obtained the tfidf matrix for a given file.
@@ -8,7 +8,7 @@ AKumar<-read.csv("Testing_File.csv",header = T,as.is=T)
 ##Output: tfidf matrix for the selected file
 ###########################
 
-Create_X<-function(Filename=AKumar){
+Create_X<-function(Filename){
   ##Get DTM for Coauthor:
   CoAu <- itoken(Filename$Coauthor,
                    preprocessor = tolower,
@@ -48,7 +48,7 @@ Create_X<-function(Filename=AKumar){
                              c("a", "an", "the", "in", "on", "at", "of", "about", "for"))
 
   vector_Jour <- vocab_vectorizer(vo_Jour)
-  dtm_Jour <- create_dtm(Jour,vector_Jour)
+  dtm_Jour <- create_dtm(Pap,vector_Jour)
 
   ##Get tfidf matrixes respectively
   tfidf <- TfIdf$new()
@@ -61,12 +61,9 @@ Create_X<-function(Filename=AKumar){
 
   ##Get tfidf matrix by combining all features:
   tfid_matrix<-as.matrix(cbind(dtm_CoAu_tfidf,dtm_Pap_tfidf,dtm_Jour_tfidf))
-  
-  ##Get tfidf matrix by row combining all features:
-  #tfid_matrix<-as.matrix(rbind(dtm_CoAu_tfidf,dtm_Pap_tfidf,dtm_Jour_tfidf))
   return(tfid_matrix)
   }
 
 
-
+#mode(Create_X()[1,])
 

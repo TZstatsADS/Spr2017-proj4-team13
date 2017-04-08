@@ -7,16 +7,16 @@
 
 library(text2vec)
 
-AKumar<-read.csv("Testing_File.csv",header = T,as.is=T)
-source("../lib/Create_Matrix.R")
+#AKumar<-read.csv("Testing_File.csv",header = T,as.is=T)
+#source("../lib/Create_Matrix.R")
 
-initialization<-function(authorname){
+initialization<-function(rawdata){
   ##Get Author ID and find the k:
-  AuthorID<-authorname$AuthorID
+  AuthorID<-rawdata$AuthorID
   True_K<-length(unique(AuthorID))
   
   ##Create the Matrix
-  X<-Create_X(authorname)
+  X<-Create_X(rawdata)
 
   ##Random generate :
   p<-ncol(X)
@@ -24,11 +24,10 @@ initialization<-function(authorname){
   A<-diag(runif(p,0,2))
   
   ##Split the Coauthor:
-  split_CoAuthor<-strsplit(authorname[,1],split = ";")
-  
+  split_CoAuthor<-strsplit(rawdata[,1],split = ";")
   
   ##Initilize the clusters:
-  I<-1:nrow(authorname)
+  I<-1:nrow(rawdata)
   cluster<-rep(NA,n)  ##cluster assignment
   a<-c()
   k<-1
