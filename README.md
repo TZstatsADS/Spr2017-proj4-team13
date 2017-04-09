@@ -4,15 +4,15 @@
 
 Term: Spring 2017
 
-+ Team #
++ Team #13
 + Projec title: Lorem ipsum dolor sit amet
 + Team members
-	+ team member 1
-	+ team member 2
-	+ team member 3
-	+ team member 4
-	+ team member 5
-+ Project summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	+ team member 1 : Boxuan Zhao -- Presenter
+	+ team member 2 : Zixuan Guan
+	+ team member 3 : Zheren Tang
+	+ team member 4 : Jihan Wei
+	+ team member 5 : Yingxin Zhang
++ Project summary: In this project, we were assigned two algorithms whose main foucs is on author name disambiguation. We recoded each algorithm following instruction from the papers, and we also come up with our own methods to compare and evalute the two algorithms.
 	
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
