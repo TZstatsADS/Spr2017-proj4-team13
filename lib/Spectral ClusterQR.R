@@ -1,8 +1,10 @@
-#This is a function that performs the spectral cluster algorithm using QR decomposition to assign clusters
+#This is a function that performs the spectral cluster algorithm using QR decomposition to assign clusters assignments
 #Package needed:  None
+
 #Input: 
 #my.dat: a m by n citation data matrix
 #n.cluster: numerical value indeicates the number of clusters indicated
+
 #output:
 #cluster: A numerical vector that contains cluster results for each observation
 
@@ -16,34 +18,11 @@ Spectral.Cluster = function(my.dat, n.cluster=2) {
   #Construct Gram matrix
   Gram = t(my.dat) %*% my.dat
   
-  #for(i in 1 : Nrow){
-   # for(j in 1 : Nrow){
-    #  if(i != j){
-     #   Affinity[i,j] = exp(-(1/2*(sigma^2)) * norm(as.matrix(my.dat[i,]-my.dat[j,]), type="F")^2)}
-    #}
-  #}  
-  
-  #Construct degree matrix Degree   
-  #Degree = diag(apply(Affinity,1,sum))
-  
-  #Construct normalizaed graph Laplacian
-  #Lap = (Degree %^% (-1/2)) %*% Affinity %*% (Degree %^% (-1/2))
-  
   #Obtain eigenvctors for the gram matrix
   ev = eigen(Gram, symmetric = TRUE)
   
   #Form matrix X by taking the n.cluster largest eigenvectors from Lap
   X = ev$vectors[,1:n.cluster]
-  
-  #Renormalizaing each X's rows
- # for(i in 1:dim(X)[1])
-  #{
-   # normalize = sqrt(sum(X[i,]^2))
-    #for(j in 1 : dim(X)[2])
-    #{
-     # X[i,j] = X[i,j]/normalize
-    #}
-  #}
   
   #Construct the transpose matrix of X
   Y = t(X)
