@@ -10,6 +10,12 @@ This file is currently a template for implementing one of the suggested papers, 
 ## Step 0: Load the packages, specify directories
 
 ```{r}
+##########################################################################################################
+# Here replace it with your own path or manually set it in RStudio to the lib folder                     #
+setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/Spr2017-proj4-team13/lib")#
+##########################################################################################################
+
+#Relevant packages
 list.of.packages = c("expm","pacman")
 
 new.packages = list.of.packages[!(list.of.packages %in% install.packages()[,"Package"])]
@@ -24,12 +30,12 @@ library("pacman")
 
 
 #if (!require("pacman")) install.packages("pacman")
-pacman::p_load(text2vec, dplyr, qlcMatrix, kernlab, knitr)
+#pacman::p_load(text2vec, dplyr, qlcMatrix, kernlab, knitr)
 
- setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/Spr2017-proj4-team13/lib")# here replace it with your own path or manually set it in RStudio to where this rmd file is located
 
-#Specify relevant functions
-source("../lib/SPectral ClusterQR.R")
+
+#Specify relevant functions needed
+source("../lib/Spectral ClusterQR.R")
 source("../lib/Create_Matrix.R")
 source("../lib/tfidf.R")
 ```
@@ -72,12 +78,6 @@ MJones = read.csv("../data/namecsv/MJones.csv",header = TRUE, stringsAsFactors =
 MMiller = read.csv("../data/namecsv/MMiller.csv",header = TRUE, stringsAsFactors = FALSE)
 SLee = read.csv("../data/namecsv/SLee.csv",header = TRUE, stringsAsFactors = FALSE)
 YChen = read.csv("../data/namecsv/YChen.csv",header = TRUE, stringsAsFactors = FALSE)
-
-#Create the whole matrix
-#A = Create_X(YChen)
-#table(A[2,])
-AGupta$Coauthor
-
 ```
 
 ## Step 2: Feature design
