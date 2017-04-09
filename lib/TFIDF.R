@@ -17,7 +17,7 @@ Create_Coauthor<-function(Filename=AKumar){
   tfidf <- TfIdf$new()
   dtm_CoAu_tfidf <- fit_transform(dtm_CoAu, tfidf)
   
-  return(dtm_CoAu_tfidf)
+  return(as.matrix(dtm_CoAu_tfidf))
 
 }
 
@@ -40,7 +40,7 @@ Create_Title<-function(Filename = AKumar){
   tfidf <- TfIdf$new()
   dtm_Pap_tfidf<-fit_transform(dtm_Pap, tfidf)
   
-  return(dtm_Pap_tfidf)
+  return(as.matrix(dtm_Pap_tfidf))
 }
 
 Create_Journal<-function(Filename = AKumar){
@@ -61,7 +61,7 @@ Create_Journal<-function(Filename = AKumar){
   tfidf <- TfIdf$new()
   dtm_Jour_tfidf<-fit_transform(dtm_Jour, tfidf)
   
-  return(dtm_Jour_tfidf)
+  return(as.matrix(dtm_Jour_tfidf))
 }
 
 

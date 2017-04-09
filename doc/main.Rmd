@@ -27,6 +27,11 @@ library("pacman")
 pacman::p_load(text2vec, dplyr, qlcMatrix, kernlab, knitr)
 
  setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/Spr2017-proj4-team13/lib")# here replace it with your own path or manually set it in RStudio to where this rmd file is located
+
+#Specify relevant functions
+source("../lib/SPectral ClusterQR.R")
+source("../lib/Create_Matrix.R")
+source("../lib/tfidf.R")
 ```
 
 ## Step 1: Load and process the data
@@ -67,6 +72,12 @@ MJones = read.csv("../data/namecsv/MJones.csv",header = TRUE, stringsAsFactors =
 MMiller = read.csv("../data/namecsv/MMiller.csv",header = TRUE, stringsAsFactors = FALSE)
 SLee = read.csv("../data/namecsv/SLee.csv",header = TRUE, stringsAsFactors = FALSE)
 YChen = read.csv("../data/namecsv/YChen.csv",header = TRUE, stringsAsFactors = FALSE)
+
+#Create the whole matrix
+#A = Create_X(YChen)
+#table(A[2,])
+AGupta$Coauthor
+
 ```
 
 ## Step 2: Feature design
