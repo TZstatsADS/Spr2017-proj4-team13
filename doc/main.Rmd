@@ -16,7 +16,7 @@ setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/S
 ##########################################################################################################
 
 #Relevant packages
-list.of.packages = c("expm","pacman")
+list.of.packages = c("expm","pacman","text2vec")
 
 new.packages = list.of.packages[!(list.of.packages %in% install.packages()[,"Package"])]
 
@@ -27,7 +27,7 @@ if(length(new.packages))
 
 library("expm")
 library("pacman")
-
+library("text2vec")
 
 #if (!require("pacman")) install.packages("pacman")
 #pacman::p_load(text2vec, dplyr, qlcMatrix, kernlab, knitr)
@@ -37,7 +37,7 @@ library("pacman")
 #Specify relevant functions needed
 source("../lib/Spectral ClusterQR.R")
 source("../lib/Create_Matrix.R")
-source("../lib/tfidf.R")
+source("../lib/TFIDF.R")
 ```
 
 ## Step 1: Load and process the data
@@ -64,20 +64,30 @@ We will extract all relevant information from data in this chunck
 # then assign the unique ID for all the citations
 #AKumar$PaperID <- rownames(AKumar)
 
-AGupta = read.csv("../data/namecsv/AGupta.csv",header = TRUE, stringsAsFactors = FALSE)
-AKumar = read.csv("../data/namecsv/AKumar.csv",header = TRUE, stringsAsFactors = FALSE)
-CChen = read.csv("../data/namecsv/CChen.csv",header = TRUE, stringsAsFactors = FALSE)
-DJohnson = read.csv("../data/namecsv/DJohnson.csv",header = TRUE, stringsAsFactors = FALSE)
-JLee =  read.csv("../data/namecsv/JLee.csv",header = TRUE, stringsAsFactors = FALSE)
-JMartin = read.csv("../data/namecsv/JMartin.csv",header = TRUE, stringsAsFactors = FALSE)
-JRobinson  = read.csv("../data/namecsv/JRobinson.csv",header = TRUE, stringsAsFactors = FALSE)
-JSmith = read.csv("../data/namecsv/JSmith.csv",header = TRUE, stringsAsFactors = FALSE)
-KTanaka = read.csv("../data/namecsv/KTanaka.csv",header = TRUE, stringsAsFactors = FALSE)
-MBrown = read.csv("../data/namecsv/MBrown.csv",header = TRUE, stringsAsFactors = FALSE)
-MJones = read.csv("../data/namecsv/MJones.csv",header = TRUE, stringsAsFactors = FALSE)
-MMiller = read.csv("../data/namecsv/MMiller.csv",header = TRUE, stringsAsFactors = FALSE)
-SLee = read.csv("../data/namecsv/SLee.csv",header = TRUE, stringsAsFactors = FALSE)
-YChen = read.csv("../data/namecsv/YChen.csv",header = TRUE, stringsAsFactors = FALSE)
+#AGupta = read.csv("../data/namecsv/AGupta.csv",header = TRUE, stringsAsFactors = FALSE)
+#AKumar = read.csv("../data/namecsv/AKumar.csv",header = TRUE, stringsAsFactors = FALSE)
+#CChen = read.csv("../data/namecsv/CChen.csv",header = TRUE, stringsAsFactors = FALSE)
+#DJohnson = read.csv("../data/namecsv/DJohnson.csv",header = TRUE, stringsAsFactors = FALSE)
+#JLee =  read.csv("../data/namecsv/JLee.csv",header = TRUE, stringsAsFactors = FALSE)
+#JMartin = read.csv("../data/namecsv/JMartin.csv",header = TRUE, stringsAsFactors = FALSE)
+#JRobinson  = read.csv("../data/namecsv/JRobinson.csv",header = TRUE, stringsAsFactors = FALSE)
+#JSmith = read.csv("../data/namecsv/JSmith.csv",header = TRUE, stringsAsFactors = FALSE)
+#KTanaka = read.csv("../data/namecsv/KTanaka.csv",header = TRUE, stringsAsFactors = FALSE)
+#MBrown = read.csv("../data/namecsv/MBrown.csv",header = TRUE, stringsAsFactors = FALSE)
+#MJones = read.csv("../data/namecsv/MJones.csv",header = TRUE, stringsAsFactors = FALSE)
+#MMiller = read.csv("../data/namecsv/MMiller.csv",header = TRUE, stringsAsFactors = FALSE)
+#SLee = read.csv("../data/namecsv/SLee.csv",header = TRUE, stringsAsFactors = FALSE)
+#YChen = read.csv("../data/namecsv/YChen.csv",header = TRUE, stringsAsFactors = FALSE)
+
+#Input all the information
+Original = read.csv("../data/namecsv/All_Stacked.csv")
+Original$Coauthor = as.character(Original$Coauthor)
+Original$Paper = as.character(Original$Paper)
+Original$Journal = as.character(Original$Journal)
+#The dimension
+dim(Original)
+#Column name
+colnames(Original)
 ```
 
 ## Step 2: Feature design
@@ -93,6 +103,13 @@ $$
 \mbox{TF-IDF}(t) &=\mbox{TF}(t)\times\mbox{IDF}(t)
 \end{aligned}
 $$
+```{r}
+#### Load and process data for paper 3
+P3.Coauthoer = Create_Coauthor(Original)
+P3.Paper = Create_Title(Original)
+P3.Journal = Create_Journal(Original)
+#### Load and process data for paper 6
+```
 
 To compute TF-IDF, we first need to construct a document-term matrix (DTM). In other words, the first step is to vectorize text by creating a map from words to a vector space. There are some good packages you could use for text mining (probably you have tried during first project, you don't need to follow my code if you are familiar with other package), e.g. *text2vec, tm, tidytext*. Here, we are going to use *text2vec* package. A good tutorial can be found here, <https://cran.r-project.org/web/packages/text2vec/vignettes/text-vectorization.html>.
 
@@ -135,13 +152,33 @@ dtm_train_tfidf <- fit_transform(dtm_train, tfidf)
 
 First of all, we perofrom the spectral cluster with QR decomposition on the data sets
 ```{r}
-source("../lib/Spectral ClusterQR.R")
-start.time <- Sys.time()
-result_sclust <- Spectral.Cluster(as.matrix(dtm_train_tfidf), n.cluster=2)
+#For Coauthor
+start.time.specc.coauthor <- Sys.time()
+result_sclust.coauthor <- Spectral.Cluster(P3.Coauthor, n.cluster=length(unique(Original$AuthorID)))
   #specc(as.matrix(dtm_train_tfidf), 
                        #centers=length(unique(AKumar$AuthorID)))
-end.time <- Sys.time()
-time_sclust <- end.time - start.time
+end.time.specc.coauthor <- Sys.time()
+time_sclust.coauthor <- end.time.specc.coauthor - start.time.specc.coauthor
+
+#For Paper
+start.time.specc.paper <- Sys.time()
+result_sclust.paper <- Spectral.Cluster(P3.Paper, n.cluster=length(unique(Original$AuthorID)))
+  #specc(as.matrix(dtm_train_tfidf), 
+                       #centers=length(unique(AKumar$AuthorID)))
+end.time.specc.paper <- Sys.time()
+time_sclust.paper <- end.time.specc.paper - start.time.specc.paper
+
+#For Journal title
+start.time.specc.journal <- Sys.time()
+result_sclust.journal <- Spectral.Cluster(P3.Journal, n.cluster=length(unique(Original$AuthorID)))
+  #specc(as.matrix(dtm_train_tfidf), 
+                       #centers=length(unique(AKumar$AuthorID)))
+end.time.specc.journal <- Sys.time()
+time_sclust.journal <- end.time.specc.journal - start.time.specc.journal
+
+
+
+
 table(result_sclust)
 ```
 

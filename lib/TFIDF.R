@@ -3,7 +3,7 @@
 library(text2vec)
 
 #For Coauthor
-Create_Coauthor<-function(Filename=AKumar){
+Create_Coauthor<-function(Filename){
   ##Get DTM for Coauthor:
   CoAu <- itoken(Filename$Coauthor,
                  preprocessor = tolower,
@@ -26,7 +26,7 @@ Create_Coauthor<-function(Filename=AKumar){
 }
 
 #For Paper
-Create_Title<-function(Filename = AKumar){
+Create_Title<-function(Filename){
   ##Get DTM for Title:
   Pap <- itoken(Filename$Paper,
                 preprocessor = tolower,
@@ -49,7 +49,7 @@ Create_Title<-function(Filename = AKumar){
 }
 
 #For Journal
-Create_Journal<-function(Filename = AKumar){
+Create_Journal<-function(Filename){
   ##Get DTM for Journal:
   Jour <- itoken(as.character(Filename$Journal),
                  preprocessor = tolower,
