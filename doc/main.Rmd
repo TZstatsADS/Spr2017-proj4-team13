@@ -114,7 +114,7 @@ P3.Journal = Create_Journal(Original)
 To compute TF-IDF, we first need to construct a document-term matrix (DTM). In other words, the first step is to vectorize text by creating a map from words to a vector space. There are some good packages you could use for text mining (probably you have tried during first project, you don't need to follow my code if you are familiar with other package), e.g. *text2vec, tm, tidytext*. Here, we are going to use *text2vec* package. A good tutorial can be found here, <https://cran.r-project.org/web/packages/text2vec/vignettes/text-vectorization.html>.
 
 Let’s first create a vocabulary-based DTM. Here we collect unique terms from all documents and mark each of them with a unique ID using the  `create_vocabulary()` function. We use an iterator to create the vocabulary.
-```{r}
+```{r, eval=FALSE, include=FALSE}
 it_train <- itoken(AKumar$Paper, 
              preprocessor = tolower, 
              tokenizer = word_tokenizer,
@@ -130,20 +130,20 @@ vocab
 Here, we remove pre-defined stopwords, the words like “a”, “the”, “in”, “I”, “you”, “on”, etc, which do not provide much useful information. 
 
 Now that we have a vocabulary list, we can construct a document-term matrix.
-```{r}
+```{r, eval=FALSE, include=FALSE}
 vectorizer <- vocab_vectorizer(vocab)
 dtm_train <- create_dtm(it_train, vectorizer)
 ```
 
 Now we have DTM and can check its dimensions.
-```{r}
+```{r, eval=FALSE, include=FALSE}
 dim(dtm_train)
 ```
 
 As you can see, the DTM has `r nrow(dtm_train)` rows, equal to the number of citations, and `r ncol(dtm_train)`, equal to the number of unique terms excluding stopwords.
 
 Then, we want to use DTM to compute TF-IDF transformation on DTM.
-```{r}
+```{r, eval=FALSE, include=FALSE}
 tfidf <- TfIdf$new()
 dtm_train_tfidf <- fit_transform(dtm_train, tfidf)
 ```
@@ -179,21 +179,21 @@ time_sclust.journal <- end.time.specc.journal - start.time.specc.journal
 
 
 
-table(result_sclust)
+#table(result_sclust)
 ```
 
 Second of all, we imlememnt the algorithm we use from paper 6 to analysis our data set. 
 ```{r}
 start.time <- Sys.time()
-docsdissim <- cosSparse(t(dtm_train_tfidf))
-rownames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
-colnames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
+#docsdissim <- cosSparse(t(dtm_train_tfidf))
+#rownames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
+#colnames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
 #compute pairwise cosine similarities using cosSparse function in package qlcMatrix
-h <- hclust(as.dist(docsdissim), method = "ward.D")
+#h <- hclust(as.dist(docsdissim), method = "ward.D")
 result_hclust <- cutree(h,length(unique(AKumar$AuthorID)))
 end.time <- Sys.time()
 time_hclust <- end.time - start.time
-table(result_hclust)
+#table(result_hclust)
 ```
 
 ## Step 4: Evaluation
@@ -214,17 +214,17 @@ $$
 $$
 
 ```{r}
-source('~/Dropbox/Project4_WhoIsWho/lib/evaluation_measures.R')
-matching_matrix_hclust <- matching_matrix(AKumar$AuthorID,result_hclust)
-performance_hclust <- performance_statistics(matching_matrix_hclust)
-matching_matrix_sclust <- matching_matrix(AKumar$AuthorID,result_sclust)
-performance_sclust <- performance_statistics(matching_matrix_sclust)
-compare_df <- data.frame(method=c("sClust","hClust"),
-                         precision=c(performance_sclust$precision, performance_hclust$precision),
-                         recall=c(performance_sclust$recall, performance_hclust$recall),
-                         f1=c(performance_sclust$f1, performance_hclust$f1),
-                         accuracy=c(performance_sclust$accuracy, performance_hclust$accuracy),
-                         time=c(time_sclust,time_hclust))
-kable(compare_df,caption="Comparision of performance for two clustering methods",digits = 2)
+#source('~/Dropbox/Project4_WhoIsWho/lib/evaluation_measures.R')
+#matching_matrix_hclust <- matching_matrix(AKumar$AuthorID,result_hclust)
+#performance_hclust <- performance_statistics(matching_matrix_hclust)
+#matching_matrix_sclust <- matching_matrix(AKumar$AuthorID,result_sclust)
+#performance_sclust <- performance_statistics(matching_matrix_sclust)
+#compare_df <- data.frame(method=c("sClust","hClust"),
+ #                        precision=c(performance_sclust$precision, performance_hclust$precision),
+  #                       recall=c(performance_sclust$recall, performance_hclust$recall),
+   #                      f1=c(performance_sclust$f1, performance_hclust$f1),
+    #                     accuracy=c(performance_sclust$accuracy, performance_hclust$accuracy),
+     #                    time=c(time_sclust,time_hclust))
+#kable(compare_df,caption="Comparision of performance for two clustering methods",digits = 2)
 ```
 
