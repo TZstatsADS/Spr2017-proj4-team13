@@ -1,4 +1,8 @@
+#These functions are used to create the tf-idf document term matrix used for analysis
+
 library(text2vec)
+
+#For Coauthor
 Create_Coauthor<-function(Filename=AKumar){
   ##Get DTM for Coauthor:
   CoAu <- itoken(Filename$Coauthor,
@@ -21,6 +25,7 @@ Create_Coauthor<-function(Filename=AKumar){
 
 }
 
+#For Paper
 Create_Title<-function(Filename = AKumar){
   ##Get DTM for Title:
   Pap <- itoken(Filename$Paper,
@@ -43,6 +48,7 @@ Create_Title<-function(Filename = AKumar){
   return(as.matrix(dtm_Pap_tfidf))
 }
 
+#For Journal
 Create_Journal<-function(Filename = AKumar){
   ##Get DTM for Journal:
   Jour <- itoken(as.character(Filename$Journal),
