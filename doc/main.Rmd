@@ -105,7 +105,7 @@ $$
 $$
 ```{r}
 #### Load and process data for paper 3
-P3.Coauthoer = Create_Coauthor(Original)
+P3.Coauthor = Create_Coauthor(Original)
 P3.Paper = Create_Title(Original)
 P3.Journal = Create_Journal(Original)
 #### Load and process data for paper 6
