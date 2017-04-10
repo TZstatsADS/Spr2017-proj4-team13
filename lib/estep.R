@@ -4,7 +4,7 @@
 # E-step
 # update centroids and recalculate A
 
-estep <- function(cluster,X,centroids,A,rawdata){
+estep <- function(cluster,X,centroids,A){
   #number of data
   n <- nrow(X)
   #number of clusters
