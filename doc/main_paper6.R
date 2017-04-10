@@ -2,7 +2,10 @@
 folder.path="../data/namecsv/"
 
 ##Sourse all functions:
-functions=list.files(path = "../lib/")
+functions=list.files(path = "../lib/",pattern = "*.R")
+functions2=list.files(path = "../lib/",pattern = "*.r")
+functions<-c(functions,functions2)
+
 for(i in 1:length(functions)){
   source(paste("../lib/",functions[i],sep=""))
 }
@@ -30,7 +33,6 @@ X_all<-lapply(rawdata,Create_X)
 ####Testing set ==AKumar
 
 ########################
-
 Akumar_rawdata<-rawdata[["AKumar"]]
 #Akumar_rawdata<-Akumar_rawdata[1:20,]
 Akumar_X<-X_all[["AKumar"]]
@@ -65,6 +67,7 @@ cluster2<-cluster
 A<-answer$A
 m=0
 
+a1<-Sys.time()
 while(any(cluster!=cluster2)|(m==0)){
   cluster<-cluster2
   M_step<-mstep(cluster=cluster,X=X,A=A,ita=0.01)
@@ -75,7 +78,7 @@ while(any(cluster!=cluster2)|(m==0)){
   cluster2<-estep_fixed_clusters(cluster=cluster,X=X,centroids=centroids,A=A)
   cluster2<-as.numeric(factor(cluster2))
   }
-
+a2<-Sys.time()
 
 ##Conditions:
 
@@ -85,7 +88,7 @@ while(any(cluster!=cluster2)|(m==0)){
 
 
 
-
+cluster2<-answer$cluster
 ##assign authors to each clusters:
 C<-length(unique(cluster2))
 
