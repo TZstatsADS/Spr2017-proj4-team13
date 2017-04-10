@@ -37,10 +37,7 @@ library("text2vec")
 
 
 #Specify relevant functions needed
-source("../lib/paper3/Spectral ClusterQR.R")
-source("../lib/paper3/Create_Matrix.R")
-source("../lib/paper3/TFIDF.R")
-source("../lib/paper3/Misclassification.R")
+source("../lib/Create_Matrix.R")
 ```
 
 ## Step 1: Load and process the data
@@ -108,49 +105,50 @@ $$
 $$
 
 ```{r}
-#### Load and process data for paper 3
-AGupta.coauthor = Create_Coauthor(AGupta)
-AGupta.paper = Create_Title(AGupta)
-AGupta.journal = Create_Journal(AGupta)
-AKumar.coauthor = Create_Coauthor(AKumar)
-AKumar.paper = Create_Title(AKumar)
-AKumar.journal = Create_Journal(AKumar)
-CChen.coauthor = Create_Coauthor(CChen)
-CChen.paper = Create_Title(CChen)
-CChen.journal = Create_Journal(CChen)
-DJohnson.coauthor = Create_Coauthor(DJohnson)
-DJohnson.paper = Create_Title(DJohnson)
-DJohnson.journal = Create_Journal(DJohnson)
-JLee.coauthor = Create_Coauthor(JLee)
-JLee.paper = Create_Title(JLee)
-JLee.journal = Create_Journal(JLee)
-JMartin.coauthor = Create_Coauthor(JMartin)
-JMartin.paper = Create_Title(JMartin)
-JMartin.journal = Create_Journal(JMartin)
-JRobinson.coauthor = Create_Coauthor(JRobinson)
-JRobinson.paper = Create_Title(JRobinson)
-JRobinson.journal = Create_Journal(JRobinson)
-JSmith.coauthor = Create_Coauthor(JSmith)
-JSmith.paper = Create_Title(JSmith)
-JSmith.journal = Create_Journal(JSmith)
-KTanaka.coauthor = Create_Coauthor(KTanaka)
-KTanaka.paper = Create_Title(KTanaka)
-KTanaka.journal = Create_Journal(KTanaka)
-MBrown.coauthor = Create_Coauthor(MBrown)
-MBrown.paper = Create_Title(MBrown)
-MBrown.journal = Create_Journal(MBrown)
-MJones.coauthor = Create_Coauthor(MJones)
-MJones.paper = Create_Title(MJones)
-MJones.journal = Create_Journal(MJones)
-MMiller.coauthor = Create_Coauthor(MMiller)
-MMiller.paper = Create_Title(MMiller)
-MMiller.journal = Create_Journal(MMiller)
-SLee.coauthor = Create_Coauthor(SLee)
-SLee.paper = Create_Title(SLee)
-SLee.journal = Create_Journal(SLeel)
-YChen.coauthor = Create_Coauthor(YChen)
-YChen.paper = Create_Title(YChen)
-YChen.journal = Create_Journal(YChen)
+source("../lib/paper3/TFIDF_FeatureDesign.R")
+#For paper 3
+AGupta.Coauthor = Create_Coauthor(AGupta)
+AGupta.Paper = Create_Title(AGupta)
+AGupta.Journal = Create_Journal(AGupta)
+AKumar.Coauthor = Create_Coauthor(AKumar)
+AKumar.Paper = Create_Title(AKumar)
+AKumar.Journal = Create_Journal(AKumar)
+CChen.Coauthor = Create_Coauthor(CChen)
+CChen.Paper = Create_Title(CChen)
+CChen.Journal = Create_Journal(CChen)
+DJohnson.Coauthor = Create_Coauthor(DJohnson)
+DJohnson.Paper = Create_Title(DJohnson)
+DJohnson.Journal = Create_Journal(DJohnson)
+JLee.Coauthor = Create_Coauthor(JLee)
+JLee.Paper = Create_Title(JLee)
+JLee.Journal = Create_Journal(JLee)
+JMartin.Coauthor = Create_Coauthor(JMartin)
+JMartin.Paper = Create_Title(JMartin)
+JMartin.Journal = Create_Journal(JMartin)
+JRobinson.Coauthor = Create_Coauthor(JRobinson)
+JRobinson.Paper = Create_Title(JRobinson)
+JRobinson.Journal = Create_Journal(JRobinson)
+JSmith.Coauthor = Create_Coauthor(JSmith)
+JSmith.Paper = Create_Title(JSmith)
+JSmith.Journal = Create_Journal(JSmith)
+KTanaka.Coauthor = Create_Coauthor(KTanaka)
+KTanaka.Paper = Create_Title(KTanaka)
+KTanaka.Journal = Create_Journal(KTanaka)
+MBrown.Coauthor = Create_Coauthor(MBrown)
+MBrown.Paper = Create_Title(MBrown)
+MBrown.Journal = Create_Journal(MBrown)
+MJones.Coauthor = Create_Coauthor(MJones)
+MJones.Paper = Create_Title(MJones)
+MJones.Journal = Create_Journal(MJones)
+MMiller.Coauthor = Create_Coauthor(MMiller)
+MMiller.Paper = Create_Title(MMiller)
+MMiller.Journal = Create_Journal(MMiller)
+SLee.Coauthor = Create_Coauthor(SLee)
+SLee.Paper = Create_Title(SLee)
+SLee.Journal = Create_Journal(SLee)
+YChen.Coauthor = Create_Coauthor(YChen)
+YChen.Paper = Create_Title(YChen)
+YChen.Journal = Create_Journal(YChen)
 
 #P3.Coauthor = Create_Coauthor(Original)
 #P3.Paper = Create_Title(Original)
@@ -160,68 +158,119 @@ YChen.journal = Create_Journal(YChen)
 
 To compute TF-IDF, we first need to construct a document-term matrix (DTM). In other words, the first step is to vectorize text by creating a map from words to a vector space. There are some good packages you could use for text mining (probably you have tried during first project, you don't need to follow my code if you are familiar with other package), e.g. *text2vec, tm, tidytext*. Here, we are going to use *text2vec* package. A good tutorial can be found here, <https://cran.r-project.org/web/packages/text2vec/vignettes/text-vectorization.html>.
 
-Let’s first create a vocabulary-based DTM. Here we collect unique terms from all documents and mark each of them with a unique ID using the  `create_vocabulary()` function. We use an iterator to create the vocabulary.
-```{r, eval=FALSE, include=FALSE}
-it_train <- itoken(AKumar$Paper, 
-             preprocessor = tolower, 
-             tokenizer = word_tokenizer,
-             ids = AKumar$PaperID,
-             # turn off progressbar because it won't look nice in rmd
-             progressbar = FALSE)
-vocab <- create_vocabulary(it_train, stopwords = c("a", "an", "the", "in", "on",
-                                                   "at", "of", "above", "under"))
-
-vocab
-```
-
-Here, we remove pre-defined stopwords, the words like “a”, “the”, “in”, “I”, “you”, “on”, etc, which do not provide much useful information. 
-
-Now that we have a vocabulary list, we can construct a document-term matrix.
-```{r, eval=FALSE, include=FALSE}
-vectorizer <- vocab_vectorizer(vocab)
-dtm_train <- create_dtm(it_train, vectorizer)
-```
-
-Now we have DTM and can check its dimensions.
-```{r, eval=FALSE, include=FALSE}
-dim(dtm_train)
-```
-
-As you can see, the DTM has `r nrow(dtm_train)` rows, equal to the number of citations, and `r ncol(dtm_train)`, equal to the number of unique terms excluding stopwords.
-
-Then, we want to use DTM to compute TF-IDF transformation on DTM.
-```{r, eval=FALSE, include=FALSE}
-tfidf <- TfIdf$new()
-dtm_train_tfidf <- fit_transform(dtm_train, tfidf)
-```
-
 ## Step 3: Clustering
 
 First of all, we perofrom the spectral cluster with QR decomposition on the data sets
 ```{r}
-#For Coauthor
-start.time.specc.coauthor <- Sys.time()
-result_sclust.coauthor <- Spectral.Cluster(P3.Coauthor, n.cluster=length(unique(Original$AuthorID)))
-  #specc(as.matrix(dtm_train_tfidf), 
-                       #centers=length(unique(AKumar$AuthorID)))
-end.time.specc.coauthor <- Sys.time()
-time_sclust.coauthor <- end.time.specc.coauthor - start.time.specc.coauthor
+source("../lib/paper3/Spectral ClusterQR.R")
+#For AGupta
+AGupta_sclust.coauthor <- Spectral.Cluster(my.dat=AGupta.Coauthor, n.cluster=length(unique(AGupta$AuthorID)))
 
-#For Paper
-start.time.specc.paper <- Sys.time()
-result_sclust.paper <- Spectral.Cluster(P3.Paper, n.cluster=length(unique(Original$AuthorID)))
-  #specc(as.matrix(dtm_train_tfidf), 
-                       #centers=length(unique(AKumar$AuthorID)))
-end.time.specc.paper <- Sys.time()
-time_sclust.paper <- end.time.specc.paper - start.time.specc.paper
+AGupta_sclust.paper <- Spectral.Cluster(my.dat=AGupta.Paper, n.cluster=length(unique(AGupta$AuthorID)))
 
-#For Journal title
-start.time.specc.journal <- Sys.time()
-result_sclust.journal <- Spectral.Cluster(P3.Journal, n.cluster=length(unique(Original$AuthorID)))
-  #specc(as.matrix(dtm_train_tfidf), 
+AGupta_sclust.journal <- Spectral.Cluster(my.dat=AGupta.Journal, n.cluster=length(unique(AGupta$AuthorID)))
+  
+#For AKumar
+AKumar_sclust.coauthor <- Spectral.Cluster(AKumar.Coauthor, n.cluster=length(unique(AKumar$AuthorID)))
+
+AKumar_sclust.paper <- Spectral.Cluster(AKumar.Paper, n.cluster=length(unique(AKumar$AuthorID)))
+
+AKumar_sclust.journal <- Spectral.Cluster(AKumar.Journal, n.cluster=length(unique(AKumar$AuthorID)))
+
+#For CChen
+CChen_sclust.coauthor <- Spectral.Cluster(CChen.Coauthor, n.cluster=length(unique(CChen$AuthorID)))
+
+CChen_sclust.paper <- Spectral.Cluster(CChen.Paper, n.cluster=length(unique(CChen$AuthorID)))
+
+CChen_sclust.journal <- Spectral.Cluster(CChen.Journal, n.cluster=length(unique(CChen$AuthorID)))
+
+#For DJohnson
+DJohnson_sclust.coauthor <- Spectral.Cluster(DJohnson.Coauthor, n.cluster=length(unique(DJohnson$AuthorID)))
+
+DJohnson_sclust.paper <- Spectral.Cluster(DJohnson.Paper, n.cluster=length(unique(DJohnson$AuthorID)))
+
+DJohnson_sclust.journal <- Spectral.Cluster(DJohnson.Journal, n.cluster=length(unique(DJohnson$AuthorID)))
+
+#For JLee
+JLee_sclust.coauthor <- Spectral.Cluster(JLee.Coauthor, n.cluster=length(unique(JLee$AuthorID)))
+
+JLee_sclust.paper <- Spectral.Cluster(JLee.Paper, n.cluster=length(unique(JLee$AuthorID)))
+
+JLee_sclust.journal <- Spectral.Cluster(JLee.Journal, n.cluster=length(unique(JLee$AuthorID)))
+
+#For JMartin
+JMartin_sclust.coauthor <- Spectral.Cluster(JMartin.Coauthor, n.cluster=length(unique(JMartin$AuthorID)))
+
+JMartin_sclust.paper <- Spectral.Cluster(JMartin.Paper, n.cluster=length(unique(JMartin$AuthorID)))
+
+JMartin_sclust.journal <- Spectral.Cluster(JMartin.Journal, n.cluster=length(unique(JMartin$AuthorID)))
+
+#For JRobinson
+JRobinson_sclust.coauthor <- Spectral.Cluster(JRobinson.Coauthor, n.cluster=length(unique(JRobinson$AuthorID)))
+
+JRobinson_sclust.paper <- Spectral.Cluster(JRobinson.Paper, n.cluster=length(unique(JRobinson$AuthorID)))
+
+JRobinson_sclust.journal <- Spectral.Cluster(JRobinson.Journal, n.cluster=length(unique(JRobinson$AuthorID)))
+
+#For JSmith
+JSmith_sclust.coauthor <- Spectral.Cluster(JSmith.Coauthor, n.cluster=length(unique(JSmith$AuthorID)))
+
+JSmith_sclust.paper <- Spectral.Cluster(JSmith.Paper, n.cluster=length(unique(JSmith$AuthorID)))
+
+JSmith_sclust.journal <- Spectral.Cluster(JSmith.Journal, n.cluster=length(unique(JSmith$AuthorID)))
+
+#For KTanaka
+KTanaka_sclust.coauthor <- Spectral.Cluster(KTanaka.Coauthor, n.cluster=length(unique(KTanaka$AuthorID)))
+
+KTanaka_sclust.paper <- Spectral.Cluster(KTanaka.Paper, n.cluster=length(unique(KTanaka$AuthorID)))
+
+KTanaka_sclust.journal <- Spectral.Cluster(KTanaka.Journal, n.cluster=length(unique(KTanaka$AuthorID)))
+
+#For MBrown
+MBrown_sclust.coauthor <- Spectral.Cluster(MBrown.Coauthor, n.cluster=length(unique(MBrown$AuthorID)))
+
+MBrown_sclust.paper <- Spectral.Cluster(MBrown.Paper, n.cluster=length(unique(MBrown$AuthorID)))
+
+MBrown_sclust.journal <- Spectral.Cluster(MBrown.Journal, n.cluster=length(unique(MBrown$AuthorID)))
+
+#For MJones
+MJones_sclust.coauthor <- Spectral.Cluster(MJones.Coauthor, n.cluster=length(unique(MJones$AuthorID)))
+
+MJones_sclust.paper <- Spectral.Cluster(MJones.Paper, n.cluster=length(unique(MJones$AuthorID)))
+
+MJones_sclust.journal <- Spectral.Cluster(MJones.Journal, n.cluster=length(unique(MJones$AuthorID)))
+
+#For MMiller
+MMiller_sclust.coauthor <- Spectral.Cluster(MMiller.Coauthor, n.cluster=length(unique(MMiller$AuthorID)))
+
+MMiller_sclust.paper <- Spectral.Cluster(MMiller.Paper, n.cluster=length(unique(MMiller$AuthorID)))
+
+MMiller_sclust.journal <- Spectral.Cluster(MMiller.Journal, n.cluster=length(unique(MMiller$AuthorID)))
+
+#For SLee
+SLee_sclust.coauthor <- Spectral.Cluster(SLee.Coauthor, n.cluster=length(unique(SLee$AuthorID)))
+
+SLee_sclust.paper <- Spectral.Cluster(SLee.Paper, n.cluster=length(unique(SLee$AuthorID)))
+
+SLee_sclust.journal <- Spectral.Cluster(SLee.Journal, n.cluster=length(unique(SLee$AuthorID)))
+
+#For YChen
+YChen_sclust.coauthor <- Spectral.Cluster(YChen.Coauthor, n.cluster=length(unique(YChen$AuthorID)))
+
+YChen_sclust.paper <- Spectral.Cluster(YChen.Paper, n.cluster=length(unique(YChen$AuthorID)))
+
+YChen_sclust.journal <- Spectral.Cluster(YChen.Journal, n.cluster=length(unique(YChen$AuthorID)))
+
+
+
+
+
+
+
+#specc(as.matrix(dtm_train_tfidf), 
                        #centers=length(unique(AKumar$AuthorID)))
-end.time.specc.journal <- Sys.time()
-time_sclust.journal <- end.time.specc.journal - start.time.specc.journal
+#end.time.specc.journal <- Sys.time()
+#time_sclust.journal <- end.time.specc.journal - start.time.specc.journal
 
 
 
@@ -231,15 +280,15 @@ time_sclust.journal <- end.time.specc.journal - start.time.specc.journal
 
 Second of all, we imlememnt the algorithm we use from paper 6 to analysis our data set. 
 ```{r}
-start.time <- Sys.time()
+#start.time <- Sys.time()
 #docsdissim <- cosSparse(t(dtm_train_tfidf))
 #rownames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
 #colnames(docsdissim) <- c(1:nrow(dtm_train_tfidf))
 #compute pairwise cosine similarities using cosSparse function in package qlcMatrix
 #h <- hclust(as.dist(docsdissim), method = "ward.D")
-result_hclust <- cutree(h,length(unique(AKumar$AuthorID)))
-end.time <- Sys.time()
-time_hclust <- end.time - start.time
+#result_hclust <- cutree(h,length(unique(AKumar$AuthorID)))
+#end.time <- Sys.time()
+#time_hclust <- end.time - start.time
 #table(result_hclust)
 ```
 
@@ -259,23 +308,10 @@ $$
 \mbox{Accuracy}&=\frac{a+d}{a+b+c+d}
 \end{aligned}
 $$
+We first evalue our algorithm using the gold standard
 
+For paper 3
 ```{r}
-#We evaluate our clustering results by using our own ways, and details can be seen in the Misclassification.R
-#Misclassification(filename,classify)
-
-#The results can be senn in the following diagram:
-#kable(compare_df,caption="Comparision of performance for two clustering methods",digits = 2)
-
-
-
-
-
-
-
-
-
-
 #source('~/Dropbox/Project4_WhoIsWho/lib/evaluation_measures.R')
 #matching_matrix_hclust <- matching_matrix(AKumar$AuthorID,result_hclust)
 #performance_hclust <- performance_statistics(matching_matrix_hclust)
@@ -288,5 +324,80 @@ $$
     #                     accuracy=c(performance_sclust$accuracy, performance_hclust$accuracy),
      #                    time=c(time_sclust,time_hclust))
 #kable(compare_df,caption="Comparision of performance for two clustering methods",digits = 2)
+```
+
+For paper 6
+```{r}
+
+```
+
+Then we use our own ways to evalute 
+
+For paper 3
+```{r}
+source("../lib/paper3/Misclassification.R")
+
+AGupta.m1 = Misclassification(AGupta,AGupta_sclust.coauthor)
+AGupta.m2 = Misclassification(AGupta,AGupta_sclust.paper)
+AGupta.m3 = Misclassification(AGupta,AGupta_sclust.journal)
+
+AKumar.m1 = Misclassification(AKumar,AKumar_sclust.coauthor)
+AKumar.m2 = Misclassification(AKumar,AKumar_sclust.paper)
+AKumar.m3 = Misclassification(AKumar,AKumar_sclust.journal)
+
+CChen.m1 = Misclassification(CChen,CChen_sclust.coauthor)
+CChen.m2 = Misclassification(CChen,CChen_sclust.paper)
+CChen.m3 = Misclassification(CChen,CChen_sclust.journal)
+
+DJohnson.m1 = Misclassification(DJohnson,DJohnson_sclust.coauthor)
+DJohnson.m2 = Misclassification(DJohnson,DJohnson_sclust.paper)
+DJohnson.m3 = Misclassification(DJohnson,DJohnson_sclust.journal)
+
+JLee.m1 = Misclassification(JLee,JLee_sclust.coauthor)
+JLee.m2 = Misclassification(JLee,JLee_sclust.paper)
+JLee.m3 = Misclassification(JLee,JLee_sclust.journal)
+
+JMartin.m1 = Misclassification(JMartin,JMartin_sclust.coauthor)
+JMartin.m2 = Misclassification(JMartin,JMartin_sclust.paper)
+JMartin.m3 = Misclassification(JMartin,JMartin_sclust.journal)
+
+JRobinson.m1 = Misclassification(JRobinson,JRobinson_sclust.coauthor)
+JRobinson.m2 = Misclassification(JRobinson,JRobinson_sclust.paper)
+JRobinson.m3 = Misclassification(JRobinson,JRobinson_sclust.journal)
+
+JSmith.m1 = Misclassification(JSmith,JSmith_sclust.coauthor)
+JSmith.m2 = Misclassification(JSmith,JSmith_sclust.paper)
+JSmith.m3 = Misclassification(JSmith,JSmith_sclust.journal)
+
+KTanaka.m1 = Misclassification(KTanaka,KTanaka_sclust.coauthor)
+KTanaka.m2 = Misclassification(KTanaka,KTanaka_sclust.paper)
+KTanaka.m3 = Misclassification(KTanaka,KTanaka_sclust.journal)
+
+MBrown.m1 = Misclassification(MBrown,MBrown_sclust.coauthor)
+MBrown.m2 = Misclassification(MBrown,MBrown_sclust.paper)
+MBrown.m3 = Misclassification(MBrown,MBrown_sclust.journal)
+
+MJones.m1 = Misclassification(MJones,MJones_sclust.coauthor)
+MJones.m2 = Misclassification(MJones,MJones_sclust.paper)
+MJones.m3 = Misclassification(MJones,MJones_sclust.journal)
+
+MMiller.m1 = Misclassification(MMiller,MMiller_sclust.coauthor)
+MMiller.m2 = Misclassification(MMiller,MMiller_sclust.paper)
+MMiller.m3 = Misclassification(MMiller,MMiller_sclust.journal)
+
+SLee.m1 = Misclassification(SLee,SLee_sclust.coauthor)
+SLee.m2 = Misclassification(SLee,SLee_sclust.paper)
+SLee.m3 = Misclassification(SLee,SLee_sclust.journal)
+
+YChen.m1 = Misclassification(YChen,YChen_sclust.coauthor)
+YChen.m2 = Misclassification(YChen,YChen_sclust.paper)
+YChen.m3 = Misclassification(YChen,YChen_sclust.journal)
+
+error.rate = data.frame(filename = c("AGupta","AKumar","CChen","DJohnson","JLee","JMartin","JRobinson","JSmith","KTanaka","MBrown","MJones","MMiller","SLee","YChen"), Coauthor = c(AGupta.m1[[2]],AKumar.m1[[2]],CChen.m1[[2]],DJohnson.m1[[2]],JLee.m1[[2]],JMartin.m1[[2]],JRobinson.m1[[2]],JSmith.m1[[2]],KTanaka.m1[[2]],MBrown.m1[[2]],MJones.m1[[2]],MMiller.m1[[2]],SLee.m1[[2]],YChen.m1[[2]]), Journal= c(AGupta.m2[[2]],AKumar.m2[[2]],CChen.m2[[2]],DJohnson.m2[[2]],JLee.m2[[2]],JMartin.m2[[2]],JRobinson.m2[[2]],JSmith.m2[[2]],KTanaka.m2[[2]],MBrown.m2[[2]],MJones.m2[[2]],MMiller.m2[[2]],SLee.m2[[2]],YChen.m2[[2]]), Paper=c(AGupta.m3[[2]],AKumar.m3[[2]],CChen.m3[[2]],DJohnson.m3[[2]],JLee.m3[[2]],JMartin.m3[[2]],JRobinson.m3[[2]],JSmith.m3[[2]],KTanaka.m3[[2]],MBrown.m3[[2]],MJones.m3[[2]],MMiller.m3[[2]],SLee.m3[[2]],YChen.m3[[2]]))
+```
+
+For paper 6
+```{r}
+
 ```
 
