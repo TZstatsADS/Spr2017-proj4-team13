@@ -26,14 +26,19 @@ for (i in authores){
 ##change the raw data to matrixes:
 X_all<-lapply(rawdata,Create_X)
 
-#######################Testing set ==AKumar
+#######################
+####Testing set ==AKumar
+
+########################
+
 Akumar_rawdata<-rawdata[["AKumar"]]
-Akumar_rawdata<-Akumar_rawdata[1:20,]
+#Akumar_rawdata<-Akumar_rawdata[1:20,]
 Akumar_X<-X_all[["AKumar"]]
-Akumar_X<-Akumar_X[1:20,]
+#Akumar_X<-Akumar_X[1:20,]
 X<-Akumar_X
 data<-Akumar_rawdata
-colnames(data)
+#colnames(data)
+True_Author<-data$AuthorID
 Split_coauthor<-split_coauthor(data)
 ################################
 
@@ -67,13 +72,39 @@ while(any(cluster!=cluster2)|(m==0)){
   centroids<-M_step$centroids
   m=m+1
   
-  cluster2<-estep(cluster=cluster,X=X,centroids=centroids,A=A)
+  cluster2<-estep_fixed_clusters(cluster=cluster,X=X,centroids=centroids,A=A)
   cluster2<-as.numeric(factor(cluster2))
   }
 
 
 ##Conditions:
 
-A<-matrix(1:4,2,2)
-rowSums(A)
-A[1,]
+#A<-matrix(1:4,2,2)
+#rowSums(A)
+#A[1,]
+
+
+
+
+##assign authors to each clusters:
+C<-length(unique(cluster2))
+
+n<-length(cluster2)
+New_cluster<-c()
+
+for(k in 1:C){
+  author<-names(which.max(table(True_Author[cluster2==k])))
+  author<-as.numeric(author)
+  New_cluster[k]<-author
+}
+
+##Assigen the predicted authors to each publication:
+Assinged_Author<-c()
+for(k in 1:C){
+  Assinged_Author[cluster2==k]=New_cluster[k]
+}
+
+
+##Testing Accuracy:
+mean(Assinged_Author!=True_Author)
+
