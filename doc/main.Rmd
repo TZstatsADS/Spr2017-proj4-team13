@@ -103,6 +103,7 @@ $$
 \mbox{TF-IDF}(t) &=\mbox{TF}(t)\times\mbox{IDF}(t)
 \end{aligned}
 $$
+
 ```{r}
 #### Load and process data for paper 3
 P3.Coauthor = Create_Coauthor(Original)
