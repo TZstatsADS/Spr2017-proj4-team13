@@ -37,10 +37,10 @@ library("text2vec")
 
 
 #Specify relevant functions needed
-source("../lib/Spectral ClusterQR.R")
-source("../lib/Create_Matrix.R")
-source("../lib/TFIDF.R")
-source("../lib/Misclassification.R")
+source("../lib/paper3/Spectral ClusterQR.R")
+source("../lib/paper3/Create_Matrix.R")
+source("../lib/paper3/TFIDF.R")
+source("../lib/paper3/Misclassification.R")
 ```
 
 ## Step 1: Load and process the data
