@@ -9,19 +9,26 @@ estep <- function(cluster,X,centroids,A,rawdata){
   n <- nrow(X)
   #number of clusters
   K <- length(unique(cluster))
-  centroids <- fcen(X,cluster,A)
+  #centroids <- fcen(X,cluster,A)
   for(i in 1:n){
     obj.value<- c()
     for(k in 1:K){
       label1 <- cluster[i] 
       cluster[i] <- k
-      centroids[label1,] <- fcen(X[cluster==label1,],label1,A)
-      centroids[k,] <- fcen(X[cluster==k,],k,A)
+      centroids[label1,] <- fcen(X[cluster==label1,],cluster[cluster==label1],A)
+      centroids[k,] <- fcen(X[cluster==k,],cluster[cluster==k],A)
       #centroids <- fcen(X,cluster,A)
-      obj.value [k]<- fobj(X,cluster,centroids,A,rawdata)
+      
+      label_matrix<-matrix(NA,n,n)
+      for (j in 1:n){
+        label_matrix[j,]<-cluster==cluster[j]
+      }
+      indicator_matrix<- label_matrix*Constraint
+      
+      
+      obj.value [k]<- fobj(X,cluster,centroids,A,indicator_matrix)
     }
     cluster[i] <- which.min(obj.value)
   }
-return(cluster)
+  return(cluster)
 }
-
