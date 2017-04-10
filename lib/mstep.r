@@ -20,7 +20,7 @@ mstep <- function(cluster,X,A,ita){
   
   for(i in 1:(n-1)){
     par2<-matrix(NA,n,m)
-    for(j in (i+1):nrow(matrix)){
+    for(j in (i+1):n){
       if(label_matrix[i,j]!=0){
         x1<-X[i,]
         x2<-X[j,]
