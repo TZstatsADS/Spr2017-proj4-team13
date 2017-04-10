@@ -65,7 +65,7 @@ We will extract all relevant information from data in this chunck
 #AKumar$PaperID <- rownames(AKumar)
 
 #AGupta = read.csv("../data/namecsv/AGupta.csv",header = TRUE, stringsAsFactors = FALSE)
-#AKumar = read.csv("../data/namecsv/AKumar.csv",header = TRUE, stringsAsFactors = FALSE)
+AKumar = read.csv("../data/namecsv/AKumar.csv",header = TRUE, stringsAsFactors = FALSE)
 #CChen = read.csv("../data/namecsv/CChen.csv",header = TRUE, stringsAsFactors = FALSE)
 #DJohnson = read.csv("../data/namecsv/DJohnson.csv",header = TRUE, stringsAsFactors = FALSE)
 #JLee =  read.csv("../data/namecsv/JLee.csv",header = TRUE, stringsAsFactors = FALSE)
