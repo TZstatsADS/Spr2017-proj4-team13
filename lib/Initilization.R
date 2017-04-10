@@ -2,21 +2,16 @@
 #######Initilization fucntion#########
 ######################################
 #Input: Clearned text data which contains the information for each publication
-#Output: 1.The Coresponding 
-
-
-library(text2vec)
+#Output: 1.The Coresponding ##########
+######################################
 
 #AKumar<-read.csv("Testing_File.csv",header = T,as.is=T)
 #source("../lib/Create_Matrix.R")
 
-initialization<-function(rawdata){
+initialization<-function(rawdata,X){
   ##Get Author ID and find the k:
   AuthorID<-rawdata$AuthorID
   True_K<-length(unique(AuthorID))
-  
-  ##Create the Matrix
-  X<-Create_X(rawdata)
 
   ##Random generate :
   p<-ncol(X)
@@ -63,6 +58,7 @@ initialization<-function(rawdata){
   ##if lamda> Total No. of authors,get the upper triangular matrix:
   if (lamda>True_K){
     dist<-matrix(NA,lamda,lamda)
+    
     for(i in 1:(lamda-1)){
       for(j in (i+1):lamda){
         dist[i,j]<-sqrt(t(centroids[i,])%*%A%*%as.matrix(centroids[j,]))
@@ -105,8 +101,8 @@ initialization<-function(rawdata){
       sum_x<-as.matrix(colSums(x))
       centroids[i,]<-t(sum_x)/sqrt(as.numeric((t(sum_x)%*%A%*%sum_x)))
     }
+    centroids<-centroids[1:True_K,]
   }
-  
   ##if lamda< Total No. of authors
   if (lamda<True_K){
     ##Get the globle center: 
@@ -116,25 +112,47 @@ initialization<-function(rawdata){
     centroids_add<-t(apply(random,1,"+",glo_center))
     centroids<-rbind(centroids,centroids_add)
   }
- 
-  
-  return(list(cluster=cluster,X=X,centroids=centroids))
+  return(list(cluster=cluster,A=A,centroids=centroids))
   }
 
 
-answer<-initialization(AKumar)
+#answer<-initialization(AKumar)
 
 
-####aissng Author ID to the clusters and testing the accuracy:
-dim(centroids)
-length(cluster)
-AuthorID
-Author_Pre<-NULL
+##aissng Author ID to the clusters and testing the accuracy:
+#dim(centroids)
+#length(cluster)
 
-for(l in 1:True_K){
-  inde<-cluster==l
-  Author_Pre[inde]<-which.max(cluster[inde])
-}
+#AuthorID
+#Author_Pre<-NULL
 
-sum(Author_Pre==AuthorID)
+#for(l in 1:True_K){
+ # inde<-cluster==l
+  #Author_Pre[inde]<-which.max(cluster[inde])
+#}
+
+#sum(Author_Pre==AuthorID)
+
+
+
+######E-M Steps:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
