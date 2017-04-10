@@ -2,7 +2,7 @@
 #Package needed:  None
 
 #Input: 
-#my.dat: a m by n citation data matrix
+#my.dat: a n by m citation data matrix
 #n.cluster: numerical value indeicates the number of clusters indicated
 
 #output:
@@ -12,6 +12,8 @@
 Spectral.Cluster = function(my.dat, n.cluster=2) {
   
   #A m # of features by n # of observations
+  
+  my.dat = t(my.dat)
   
   N = ncol(my.dat)#Measure number of observations
   
