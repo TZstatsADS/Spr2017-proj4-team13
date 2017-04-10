@@ -2,7 +2,9 @@
 title: "Project 4 -  Main Script"
 author: "Boxuan Zhao, Zixuan Guan, Zheren Tang, Yingxin Zhang, Jihan Wei"
 date: "3/22/2017"
-output: pdf_document
+output: 
+  pdf_document: 
+    latex_engine: xelatex
 ---
 
 This file is currently a template for implementing one of the suggested papers, Han, Zha, & Giles (2005). Due to the nature of the method, we only implement the method on a subset of the data, "AKumar.txt". In your project, you need to work on the whole dataset. You should follow the same structure as in this tutorial, but update it according to the papers you are assigned.
@@ -38,6 +40,7 @@ library("text2vec")
 source("../lib/Spectral ClusterQR.R")
 source("../lib/Create_Matrix.R")
 source("../lib/TFIDF.R")
+source("../lib/Misclassification.R")
 ```
 
 ## Step 1: Load and process the data
@@ -215,6 +218,21 @@ $$
 $$
 
 ```{r}
+#We evaluate our clustering results by using our own ways, and details can be seen in the Misclassification.R
+#Misclassification(filename,classify)
+
+#The results can be senn in the following diagram:
+#kable(compare_df,caption="Comparision of performance for two clustering methods",digits = 2)
+
+
+
+
+
+
+
+
+
+
 #source('~/Dropbox/Project4_WhoIsWho/lib/evaluation_measures.R')
 #matching_matrix_hclust <- matching_matrix(AKumar$AuthorID,result_hclust)
 #performance_hclust <- performance_statistics(matching_matrix_hclust)
