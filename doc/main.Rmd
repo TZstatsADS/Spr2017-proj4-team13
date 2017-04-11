@@ -415,7 +415,7 @@ rownames(eva_df) <- c("AGupta_coauthor","AGupta_paper","AGupta_journal",
 
 #kable(eva_df,caption="Comparision of performance for two clustering methods",digits = 2)
 
-
+write.csv(eva_df, file = "../output/paper3/eva.csv")
 
 ```
 
