@@ -2,12 +2,10 @@
 folder.path="../data/namecsv/"
 
 ##Sourse all functions:
-functions=list.files(path = "../lib/",pattern = "*.R")
-functions2=list.files(path = "../lib/",pattern = "*.r")
-functions<-c(functions,functions2)
+functions=list.files(path = "../lib/paper6",pattern = "*.[Rr]")
 
 for(i in 1:length(functions)){
-  source(paste("../lib/",functions[i],sep=""))
+  source(paste("../lib/paper6/",functions[i],sep=""))
 }
 
 #Get all files and load them 
@@ -31,18 +29,18 @@ X_all<-lapply(rawdata,Create_X)
 
 #######################
 ####Testing set ==AKumar
-
+#In<-sample(1:244,20,replace = F)
 ########################
 Akumar_rawdata<-rawdata[["AKumar"]]
 #Akumar_rawdata<-Akumar_rawdata[1:20,]
 Akumar_X<-X_all[["AKumar"]]
-#Akumar_X<-Akumar_X[1:20,]
+#Akumar_X<-Akumar_X[In,]
 X<-Akumar_X
 data<-Akumar_rawdata
 #colnames(data)
 True_Author<-data$AuthorID
 Split_coauthor<-split_coauthor(data)
-################################
+######################## ########
 
 
 ####Get Constrian Matrix:
@@ -59,6 +57,7 @@ unique(answer$cluster)
 length(unique(answer$cluster))
 length(answer$cluster)
 dim(answer$A)
+
 dim(answer$centroids)
 
 ##EM Steps:
@@ -78,8 +77,9 @@ while(any(cluster!=cluster2)|(m==0)){
   cluster2<-estep_fixed_clusters(cluster=cluster,X=X,centroids=centroids,A=A)
   cluster2<-as.numeric(factor(cluster2))
   }
-a2<-Sys.time()
 
+a2<-Sys.time()
+a2-a1
 ##Conditions:
 
 #A<-matrix(1:4,2,2)
@@ -88,7 +88,7 @@ a2<-Sys.time()
 
 
 
-cluster2<-answer$cluster
+#cluster2<-answer$cluster
 ##assign authors to each clusters:
 C<-length(unique(cluster2))
 
@@ -108,6 +108,43 @@ for(k in 1:C){
 }
 
 
-##Testing Accuracy:
+##Testing Accuracy1:
 mean(Assinged_Author!=True_Author)
+#save(Assinged_Author,file = "../output/Assigen_Author_Akumar1:20")
 
+
+##Testing Accuracy2:
+Trueid <- True_Author
+Testid <- answer$cluster
+n <- length(Trueid)
+True_matrix <- matrix(NA,n,n)
+for(i in 1:n){
+  True_matrix[i,] <- as.numeric(sapply(Trueid,"==",Trueid[i]))
+}
+
+Test_matrix <- matrix(NA,n,n)
+time1 <- Sys.time()
+for(j in 1:n){
+  Test_matrix[j,] <- sapply(Testid,"==",Testid[j])*3+2
+  
+}
+time2 <- Sys.time()
+time2-time1
+match_matrix <- True_matrix+Test_matrix
+
+#true mis, test mis
+mis.mis <- sum(match_matrix==2)/2
+#true match, test mis
+mat.mis <- sum(match_matrix==3)/2
+#true mis, test match
+mis.mat <- sum(match_matrix==5)/2
+#true match,test mismatch
+mat.mat <- (sum(match_matrix==6)-n)/2
+
+mis.mis;mis.mat;mat.mis;mat.mat
+sum(mis.mis,mis.mat,mat.mis,mat.mat)
+choose(20,2)
+pre<-mat.mat/(mat.mat+mat.mis)
+recal<-mat.mat/(mat.mat+mis.mat)
+F1<-2*pre*recal/(pre+recal)
+accur<-(mis.mis+mat.mat)/sum(mis.mis,mis.mat,mat.mis,mat.mat)
