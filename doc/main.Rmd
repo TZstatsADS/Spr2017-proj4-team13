@@ -487,6 +487,7 @@ YChen.m2 = Misclassification(YChen,YChen_sclust.paper)
 YChen.m3 = Misclassification(YChen,YChen_sclust.journal)
 
 error.rate = data.frame(filename = c("AGupta","AKumar","CChen","DJohnson","JLee","JMartin","JRobinson","JSmith","KTanaka","MBrown","MJones","MMiller","SLee","YChen"), Coauthor = c(AGupta.m1[[2]],AKumar.m1[[2]],CChen.m1[[2]],DJohnson.m1[[2]],JLee.m1[[2]],JMartin.m1[[2]],JRobinson.m1[[2]],JSmith.m1[[2]],KTanaka.m1[[2]],MBrown.m1[[2]],MJones.m1[[2]],MMiller.m1[[2]],SLee.m1[[2]],YChen.m1[[2]]), Journal= c(AGupta.m2[[2]],AKumar.m2[[2]],CChen.m2[[2]],DJohnson.m2[[2]],JLee.m2[[2]],JMartin.m2[[2]],JRobinson.m2[[2]],JSmith.m2[[2]],KTanaka.m2[[2]],MBrown.m2[[2]],MJones.m2[[2]],MMiller.m2[[2]],SLee.m2[[2]],YChen.m2[[2]]), Paper=c(AGupta.m3[[2]],AKumar.m3[[2]],CChen.m3[[2]],DJohnson.m3[[2]],JLee.m3[[2]],JMartin.m3[[2]],JRobinson.m3[[2]],JSmith.m3[[2]],KTanaka.m3[[2]],MBrown.m3[[2]],MJones.m3[[2]],MMiller.m3[[2]],SLee.m3[[2]],YChen.m3[[2]]))
+write.csv(error.rate, file = "../output/paper3/misclassification.csv")
 ```
 
 For paper 6
