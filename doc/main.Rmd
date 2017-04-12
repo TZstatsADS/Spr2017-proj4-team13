@@ -6,8 +6,10 @@ output:
   pdf_document: 
     latex_engine: xelatex
 ---
+#ABSTRACT
 
-This file is currently a template for implementing one of the suggested papers, Han, Zha, & Giles (2005). Due to the nature of the method, we only implement the method on a subset of the data, "AKumar.txt". In your project, you need to work on the whole dataset. You should follow the same structure as in this tutorial, but update it according to the papers you are assigned.
+In this project, our team were assigned two papers that proposed two algorithms concerning name disambiguations and we implmented these two algorithms in R code and we have also proposed evaluation methods to compare these algorithms. During the development of ths project, we have observed several interesting trends. In this file, we will present our data reading, preporcessing as well as results from our evaluation process.
+
 
 ## Step 0: Load the packages, specify directories
 
@@ -247,10 +249,10 @@ $$
 \mbox{Accuracy}&=\frac{a+d}{a+b+c+d}
 \end{aligned}
 $$
-We first evalue our algorithm using the gold standard
+We first evalue our algorithm using the gold standard，given the length of the code, we hide the chunk so please refer to our main.rmd for details
 
 For paper 3
-```{r}
+```{r, include=FALSE}
 source('../lib/evaluation_measures.R')
 
 spec_eva <- function(author,result){
@@ -339,19 +341,19 @@ rownames(eva_df) <- c("AGupta_coauthor","AGupta_paper","AGupta_journal",
                       "MMiller_coauthor","MMiller_paper","MMiller_journal",
                       "SLee_coauthor","SLee_paper","SLee_journal",
                       "YChen_coauthor","YChen_paper","YChen_journal")
-
-#kable(eva_df,caption="Comparision of performance for two clustering methods",digits = 2)
-
 write.csv(eva_df, file = "../output/paper3/eva.csv")
-
 ```
+```{r}
+eva_df
+```
+
 
 For paper 6
 ```{r}
 
 ```
 
-Then we use our own ways to evalute 
+Then we use our own ways to evalute, this methods assignm a specific Author ID to each generated clusters by locating the Author ID with the maximum number of appearence in each cluster. Again, due to the lengthy code we have, we choose to hide the code and please refer to our main.rmd for detials.
 
 For paper 3
 ```{r}
@@ -416,6 +418,10 @@ YChen.m3 = Misclassification(YChen,YChen_sclust.journal)
 error.rate = data.frame(filename = c("AGupta","AKumar","CChen","DJohnson","JLee","JMartin","JRobinson","JSmith","KTanaka","MBrown","MJones","MMiller","SLee","YChen"), Coauthor = c(AGupta.m1[[2]],AKumar.m1[[2]],CChen.m1[[2]],DJohnson.m1[[2]],JLee.m1[[2]],JMartin.m1[[2]],JRobinson.m1[[2]],JSmith.m1[[2]],KTanaka.m1[[2]],MBrown.m1[[2]],MJones.m1[[2]],MMiller.m1[[2]],SLee.m1[[2]],YChen.m1[[2]]), Journal= c(AGupta.m2[[2]],AKumar.m2[[2]],CChen.m2[[2]],DJohnson.m2[[2]],JLee.m2[[2]],JMartin.m2[[2]],JRobinson.m2[[2]],JSmith.m2[[2]],KTanaka.m2[[2]],MBrown.m2[[2]],MJones.m2[[2]],MMiller.m2[[2]],SLee.m2[[2]],YChen.m2[[2]]), Paper=c(AGupta.m3[[2]],AKumar.m3[[2]],CChen.m3[[2]],DJohnson.m3[[2]],JLee.m3[[2]],JMartin.m3[[2]],JRobinson.m3[[2]],JSmith.m3[[2]],KTanaka.m3[[2]],MBrown.m3[[2]],MJones.m3[[2]],MMiller.m3[[2]],SLee.m3[[2]],YChen.m3[[2]]))
 write.csv(error.rate, file = "../output/paper3/misclassification.csv")
 ```
+```{r}
+error.rate
+```
+
 
 For paper 6
 ```{r}
@@ -423,6 +429,7 @@ For paper 6
 ```
 
 #Step 5 Further Observations of methods in paper 6
+In addition to the above evaluation, we have also observed several interesting trend for algoeithm introduced in paper 6 using c2 constraint.
 ```{r}
 
 ```
