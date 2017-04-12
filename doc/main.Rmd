@@ -8,7 +8,7 @@ output:
 ---
 #ABSTRACT
 
-In this project, our team were assigned two papers that proposed two algorithms concerning name disambiguations and we implmented these two algorithms in R code and we have also proposed evaluation methods to compare these algorithms. During the development of ths project, we have observed several interesting trends. In this file, we will present our data reading, preporcessing as well as results from our evaluation process.
+In this project, our team was assigned two papers that proposed two algorithms concerning name disambiguations and we implmented these two algorithms in R code and we have also proposed evaluation methods to compare these algorithms. Throughout the process of this project, we have observed several interesting trends. In this file, we will present our data reading, preporcessing, algorithm implements as well as evaluation results.
 
 
 ## Step 0: Load the packages, specify directories
@@ -37,7 +37,9 @@ library("stringr")
 
 ## Step 1: Load and process the data
 
-For each record in the dataset, there are some information we want to extract and store them in a regular form: canonical author id, coauthors, paper title, publication venue title. In our main.rmd file, you will find our programs for input of each data file which have been proprocessed by our functions stored in "dataclean.R" under the lib folder.
+For each record in the dataset, there are some information we want to extract and store: canonical author id, coauthors, paper title, publication venue title. 
+In our main.rmd file, you will find our programs for input of each data file which have been proprocessed by our functions stored in "dataclean.R" under the lib folder.
+
 ```{r, include=FALSE}
 AGupta = read.csv("../data/namecsv/AGupta.csv",header = TRUE, stringsAsFactors = FALSE)
 AKumar = read.csv("../data/namecsv/AKumar.csv",header = TRUE, stringsAsFactors = FALSE)
@@ -69,7 +71,7 @@ $$
 \end{aligned}
 $$
 For Paper 3
-Construct our feature design for paper three with resepct to Coauthor, Title and Journal
+Construct our feature design for paper 3 with resepct to Coauthor, Title and Journal
 ```{r}
 source("../lib/paper3/TFIDF_FeatureDesign.R")
 #For paper 3
@@ -228,7 +230,7 @@ YChen_sclust.paper <- Spectral.Cluster(YChen.Paper, n.cluster=length(unique(YChe
 YChen_sclust.journal <- Spectral.Cluster(YChen.Journal, n.cluster=length(unique(YChen$AuthorID)))
 ```
 
-Second of all, we imlememnt the algorithm we use from paper 6 to analysis our data set. 
+Second of all, we imlememnt the algorithm from paper 6 to analysis our data set. 
 ```{r}
 
 ```
@@ -249,7 +251,7 @@ $$
 \mbox{Accuracy}&=\frac{a+d}{a+b+c+d}
 \end{aligned}
 $$
-We first evalue our algorithm using the gold standard，given the length of the code, we hide the chunk so please refer to our main.rmd for details
+We first evaluate our algorithm using the gold standard,given the length of the code, we hide the chunk so please refer to our main.rmd for details
 
 For paper 3
 ```{r, include=FALSE}
@@ -353,7 +355,7 @@ For paper 6
 
 ```
 
-Then we use our own ways to evalute, this methods assignm a specific Author ID to each generated clusters by locating the Author ID with the maximum number of appearence in each cluster. Again, due to the lengthy code we have, we choose to hide the code and please refer to our main.rmd for detials.
+Then we use our own ways to evalute. This method assigns a specific Author ID to each generated clusters by locating the Author ID with the maximum number of appearence in each cluster. Again, due to the lengthy code we have, we choose to hide the code and please refer to our main.rmd for detials.
 
 For paper 3
 ```{r}
@@ -429,7 +431,7 @@ For paper 6
 ```
 
 #Step 5 Further Observations of methods in paper 6
-In addition to the above evaluation, we have also observed several interesting trend for algoeithm introduced in paper 6 using c2 constraint.
+In addition to the above evaluation, we have also observed several interesting trends for algorithm introduced in paper 6 using c2 constraint.
 ```{r}
 
 ```
