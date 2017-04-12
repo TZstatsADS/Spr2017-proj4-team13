@@ -1,4 +1,4 @@
-setwd("~/Desktop/5243 ADS/proj4/Spr2017-proj4-team13-master/data/nameset")
+#setwd("~/Desktop/5243 ADS/proj4/Spr2017-proj4-team13-master/data/nameset")
 
 #### Generate each csv file
 gatherinfo<-function(filename){
