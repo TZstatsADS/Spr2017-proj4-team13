@@ -1,5 +1,5 @@
 ##Truning for weight:
-weight<-seq(0,0.5,0.05)
+weight<-seq(0.01,0.5,0.05)
 pre<-c()
 recal<-c()
 F1<-c()
