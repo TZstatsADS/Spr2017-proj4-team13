@@ -11,4 +11,3 @@ distance <-function(x1,x2,A){
 }
 
 
-

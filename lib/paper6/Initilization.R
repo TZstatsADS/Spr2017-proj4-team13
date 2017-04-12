@@ -4,10 +4,9 @@
 #Input: Clearned text data which contains the information for each publication
 #Output: 1.The Coresponding ##########
 ######################################
-
 #AKumar<-read.csv("Testing_File.csv",header = T,as.is=T)
-#source("../lib/Create_Matrix.R")
 
+#source("../lib/Create_Matrix.R")
 initialization<-function(rawdata,X){
   ##Get Author ID and find the k:
   AuthorID<-rawdata$AuthorID
@@ -16,6 +15,7 @@ initialization<-function(rawdata,X){
   ##Random generate :
   p<-ncol(X)
   n<-nrow(X)
+  set.seed(0)
   A<-diag(runif(p,0,2))
   
   ##Split the Coauthor:
@@ -61,10 +61,11 @@ initialization<-function(rawdata,X){
     
     for(i in 1:(lamda-1)){
       for(j in (i+1):lamda){
-        dist[i,j]<-sqrt(t(centroids[i,])%*%A%*%as.matrix(centroids[j,]))
-      }}
+        dist[i,j]<-distance(centroids[i,],centroids[j,],A=A)
+      }
+    }
+    ##Get the other half A
     
-    ##Get the other half 
     for(i in lamda:1){
       for(j in 1:i){
         dist[i,j]<-dist[j,i]
@@ -113,7 +114,7 @@ initialization<-function(rawdata,X){
     centroids<-rbind(centroids,centroids_add)
   }
   return(list(cluster=cluster,A=A,centroids=centroids))
-  }
+}
 
 
 #answer<-initialization(AKumar)
