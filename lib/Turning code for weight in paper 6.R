@@ -51,5 +51,8 @@ for(h in 1:length(weight)){
 }
 F1<-2*pre*recal/(pre+recal)
 ##generate plot:
-plot(weight,F1,type="b",col=red,main = "F1 score for different weight",xlab="weight",ylab = "F1 score")
-k
+##generate plot:
+plot(weight,F1,ylim=c(0,max(pre,recal,F1)+0.1),type="l",col="pink",main = "Performacne of different weight",xlab="weight",ylab="Performance")
+points(weight,pre,type="l",col="cyan")
+points(weight,recal,type="l",col="blue")
+legend("topright",legend = c("F1 Score","Precision","Recall"),col = c("pink","cyan","blue"),lty=1)
