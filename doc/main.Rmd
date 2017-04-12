@@ -40,21 +40,11 @@ library("stringr")
 For each record in the dataset, there are some information we want to extract and store: canonical author id, coauthors, paper title, publication venue title. 
 In our main.rmd file, you will find our programs for input of each data file which have been proprocessed by our functions stored in "dataclean.R" under the lib folder.
 
-```{r, include=FALSE}
-AGupta = read.csv("../data/namecsv/AGupta.csv",header = TRUE, stringsAsFactors = FALSE)
-AKumar = read.csv("../data/namecsv/AKumar.csv",header = TRUE, stringsAsFactors = FALSE)
-CChen = read.csv("../data/namecsv/CChen.csv",header = TRUE, stringsAsFactors = FALSE)
-DJohnson = read.csv("../data/namecsv/DJohnson.csv",header = TRUE, stringsAsFactors = FALSE)
-JLee =  read.csv("../data/namecsv/JLee.csv",header = TRUE, stringsAsFactors = FALSE)
-JMartin = read.csv("../data/namecsv/JMartin.csv",header = TRUE, stringsAsFactors = FALSE)
-JRobinson  = read.csv("../data/namecsv/JRobinson.csv",header = TRUE, stringsAsFactors = FALSE)
-JSmith = read.csv("../data/namecsv/JSmith.csv",header = TRUE, stringsAsFactors = FALSE)
-KTanaka = read.csv("../data/namecsv/KTanaka.csv",header = TRUE, stringsAsFactors = FALSE)
-MBrown = read.csv("../data/namecsv/MBrown.csv",header = TRUE, stringsAsFactors = FALSE)
-MJones = read.csv("../data/namecsv/MJones.csv",header = TRUE, stringsAsFactors = FALSE)
-MMiller = read.csv("../data/namecsv/MMiller.csv",header = TRUE, stringsAsFactors = FALSE)
-SLee = read.csv("../data/namecsv/SLee.csv",header = TRUE, stringsAsFactors = FALSE)
-YChen = read.csv("../data/namecsv/YChen.csv",header = TRUE, stringsAsFactors = FALSE)
+```{r, echo=TRUE}
+#Preprocess our data files
+source("../lib/dataclean.R")
+#Read in our data files
+source("../lib/dataInput.R")
 ```
 
 ## Step 2: Feature design
@@ -75,6 +65,18 @@ Construct our feature design for paper 3 with resepct to Coauthor, Title and Jou
 ```{r}
 source("../lib/paper3/TFIDF_FeatureDesign.R")
 #For paper 3
+author_name <- list(AGupta,AKumar,CChen,DJohnson,JLee,JMartin,JRobinson,
+                    JSmith,KTanaka,MBrown,MJones,MMiller,SLee,YChen)
+coauthor <- list()
+paper <- list()
+journal <- list()
+for(i in 1:14){
+  coauthor[[i]] <- Create_Coauthor(author_name[[i]])
+  paper[[i]] <- Create_Title(author_name[[i]])
+  journal[[i]] <- Create_Journal(author_name[[i]])
+  
+}
+
 AGupta.Coauthor = Create_Coauthor(AGupta)
 AGupta.Paper = Create_Title(AGupta)
 AGupta.Journal = Create_Journal(AGupta)
