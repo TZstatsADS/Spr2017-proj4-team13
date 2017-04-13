@@ -22,7 +22,7 @@ setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/S
 #Relevant packages
 list.of.packages = c("expm","pacman","text2vec","stringr")
 
-new.packages = list.of.packages[!(list.of.packages %in% install.packages()[,"Package"])]
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 
 if(length(new.packages))
 {
@@ -40,7 +40,7 @@ library("stringr")
 For each record in the dataset, there are some information we want to extract and store: canonical author id, coauthors, paper title, publication venue title. 
 In our main.rmd file, you will find our programs for input of each data file which have been proprocessed by our functions stored in "dataclean.R" under the lib folder.
 
-```{r, echo=TRUE}
+```{r}
 #Preprocess our data files
 source("../lib/dataclean.R")
 #Read in our data files
@@ -104,16 +104,14 @@ for(i in 1:14){
 
 ```
 
-Second of all, we imlememnt the algorithm from paper 6 to analysis our data set. 
+Second of all, we implememnt the algorithm from paper 6 to analysis our data set. 
 ```{r}
 
 ```
 
 ## Step 4: Evaluation
 
-To evaluate the performance of the method, it is required to calculate the degree of agreement between a set of system-output partitions and a set of true partitions. In general, the agreement between two partitioins is measured for a pair of entities within partitions. The basic unit for which pair-wise agreement is assessed is a pair of entities (authors in our case) which belongs to one of the four cells in the following table (Kang et at.(2009)):
-
-\includegraphics[width=500pt]{matching_matrix.png}
+The evaluation will be two fold, the first part of our evaluation will be base on the perfomrance of our model in paper 3 using different features(i.e. coauthor, paper, and jounral). We applied the evaluation based on the following methods:
 
 Let $M$ be the set of machine-generated clusters, and $G$ the set of gold standard clusters. Then. in the table, for example, $a$ is the number of pairs of entities that are assigned to the same cluster in each of $M$ and $G$. Hence, $a$ and $d$ are interpreted as agreements, and $b$ and $c$ disagreements. When the table is considered as a confusion matrix for a two-class prediction problem, the standard "Precision", "Recall","F1", and "Accuracy" are defined as follows.
 
@@ -125,10 +123,7 @@ $$
 \mbox{Accuracy}&=\frac{a+d}{a+b+c+d}
 \end{aligned}
 $$
-We first evaluate our algorithm using the gold standard,given the length of the code, we hide the chunk so please refer to our main.rmd for details
-
-For paper 3
-```{r, include=FALSE}
+```{r}
 source('../lib/evaluation_measures.R')
 
 spec_eva <- function(author,result){
@@ -165,47 +160,58 @@ write.csv(eva_df, file = "../output/paper3/eva.csv")
 ```{r}
 eva_df
 ```
-
-
-
-For paper 6
+Then we implement the code we written from paper 6 for the evaluation
 ```{r}
 
 ```
 
-Then we use our own ways to evalute. This method assigns a specific Author ID to each generated clusters by locating the Author ID with the maximum number of appearence in each cluster. Again, due to the lengthy code we have, we choose to hide the code and please refer to our main.rmd for detials.
 
-For paper 3
-```{r}
-source("../lib/paper3/Misclassification.R")
+Then we start to compare the two papers using same evaluation methods. Since we do not want to produce a length report, we only use some of the data set to demonstrate what we foud during the development of this project
 
-coauthor_mis <- vector()
-title_mis <- vector()
-journal_mis <- vector()
+First of all, we compare two algorithms using each of the three feautres(Coauthor, Paper, Journal) using AKumar data set:
 
-for(i in 1:14){
-  coauthor_mis[i] <- Misclassification(author_name[[i]],spec_coauthor[[i]])
-  title_mis[i] <- Misclassification(author_name[[i]],spec_title[[i]])
-  journal_mis[i] <- Misclassification(author_name[[i]],spec_journal[[i]])
-}
+####AKumar data set results:
+![Figure 1: Evaluation results](../figs/AKumar_Comparasion3.png)
 
+From the above graph, we can observe that:
 
-error.rate = data.frame(filename = c("AGupta","AKumar","CChen","DJohnson","JLee","JMartin","JRobinson","JSmith","KTanaka","MBrown","MJones","MMiller","SLee","YChen"), Coauthor = coauthor_mis, Journal= journal_mis, Title=title_mis)
-write.csv(error.rate, file = "../output/paper3/misclassification.csv")
-```
-```{r}
-error.rate
-```
+Then, we also compare the two algorithm using a different data set KTanaka:
 
+####KTanaka data set results:
+![Figure 2: Evaluation results](../figs/KTanaka_Comparasion3.png)
 
-For paper 6
-```{r}
+From the above graph, we can see that:
 
-```
+We also have compared the two algorithms using all features:
+
+####JMartin data set results:
+![Figure 3: Evaluation results](../figs/JMartin_Comparasion.png)
+
+####MBrown data set results:
+![Figure 4: Evaluation results](../figs/MBrown_Comparasion.png)
+
+From the above two graphs, we can see that:
 
 #Step 5 Further Observations of methods in paper 6
 In addition to the above evaluation, we have also observed several interesting trends for algorithm introduced in paper 6 using c2 constraint.
-```{r}
 
-```
+####Interesting results cont'd:
+![Figure 6: Interesting results](../figs/weight tuning results for paper 6.png)
+
+
+
+
+####Interesting results cont'd:
+![Figure 6: Interesting results](../figs/Scaled_vs_Unscaled_X.png)
+
+####Interesting results cont'd:
+![Figure 7: Interesting results](../figs/Weigt_0vs1.png)
+
+
+
+
+
+
+
+
 
