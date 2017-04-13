@@ -123,6 +123,7 @@ $$
 \mbox{Accuracy}&=\frac{a+d}{a+b+c+d}
 \end{aligned}
 $$
+
 ```{r}
 source('../lib/evaluation_measures.R')
 
@@ -157,6 +158,7 @@ rownames(eva_df) <- c("AGupta_coauthor","AGupta_paper","AGupta_journal",
                       "YChen_coauthor","YChen_paper","YChen_journal")
 write.csv(eva_df, file = "../output/paper3/eva.csv")
 ```
+
 ```{r}
 eva_df
 ```
