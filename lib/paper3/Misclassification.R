@@ -24,5 +24,5 @@ Misclassification = function(filename,classify)
     }
   }
   
-  return(list(Nobservation = N, Rate = Misclassification.rate/N))
+  return(Misclassification.rate/N)
 }

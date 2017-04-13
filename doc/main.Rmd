@@ -60,8 +60,10 @@ $$
 \mbox{TF-IDF}(t) &=\mbox{TF}(t)\times\mbox{IDF}(t)
 \end{aligned}
 $$
+
 For Paper 3
 Construct our feature design for paper 3 with resepct to Coauthor, Title and Journal
+
 ```{r}
 source("../lib/paper3/TFIDF_FeatureDesign.R")
 #For paper 3
@@ -76,49 +78,6 @@ for(i in 1:14){
   journal[[i]] <- Create_Journal(author_name[[i]])
   
 }
-
-AGupta.Coauthor = Create_Coauthor(AGupta)
-AGupta.Paper = Create_Title(AGupta)
-AGupta.Journal = Create_Journal(AGupta)
-AKumar.Coauthor = Create_Coauthor(AKumar)
-AKumar.Paper = Create_Title(AKumar)
-AKumar.Journal = Create_Journal(AKumar)
-CChen.Coauthor = Create_Coauthor(CChen)
-CChen.Paper = Create_Title(CChen)
-CChen.Journal = Create_Journal(CChen)
-DJohnson.Coauthor = Create_Coauthor(DJohnson)
-DJohnson.Paper = Create_Title(DJohnson)
-DJohnson.Journal = Create_Journal(DJohnson)
-JLee.Coauthor = Create_Coauthor(JLee)
-JLee.Paper = Create_Title(JLee)
-JLee.Journal = Create_Journal(JLee)
-JMartin.Coauthor = Create_Coauthor(JMartin)
-JMartin.Paper = Create_Title(JMartin)
-JMartin.Journal = Create_Journal(JMartin)
-JRobinson.Coauthor = Create_Coauthor(JRobinson)
-JRobinson.Paper = Create_Title(JRobinson)
-JRobinson.Journal = Create_Journal(JRobinson)
-JSmith.Coauthor = Create_Coauthor(JSmith)
-JSmith.Paper = Create_Title(JSmith)
-JSmith.Journal = Create_Journal(JSmith)
-KTanaka.Coauthor = Create_Coauthor(KTanaka)
-KTanaka.Paper = Create_Title(KTanaka)
-KTanaka.Journal = Create_Journal(KTanaka)
-MBrown.Coauthor = Create_Coauthor(MBrown)
-MBrown.Paper = Create_Title(MBrown)
-MBrown.Journal = Create_Journal(MBrown)
-MJones.Coauthor = Create_Coauthor(MJones)
-MJones.Paper = Create_Title(MJones)
-MJones.Journal = Create_Journal(MJones)
-MMiller.Coauthor = Create_Coauthor(MMiller)
-MMiller.Paper = Create_Title(MMiller)
-MMiller.Journal = Create_Journal(MMiller)
-SLee.Coauthor = Create_Coauthor(SLee)
-SLee.Paper = Create_Title(SLee)
-SLee.Journal = Create_Journal(SLee)
-YChen.Coauthor = Create_Coauthor(YChen)
-YChen.Paper = Create_Title(YChen)
-YChen.Journal = Create_Journal(YChen)
 ```
 
 For Paper 6
@@ -133,103 +92,16 @@ For Paper 6
 First of all, we perofrom the spectral cluster with QR decomposition on the data sets
 ```{r}
 source("../lib/paper3/Spectral ClusterQR.R")
-#For AGupta
-AGupta_sclust.coauthor <- Spectral.Cluster(my.dat=AGupta.Coauthor, n.cluster=length(unique(AGupta$AuthorID)))
 
-AGupta_sclust.paper <- Spectral.Cluster(my.dat=AGupta.Paper, n.cluster=length(unique(AGupta$AuthorID)))
+spec_coauthor <- list()
+spec_title <- list()
+spec_journal <- list()
+for(i in 1:14){
+  spec_coauthor[[i]] <- Spectral.Cluster(my.dat = coauthor[[i]],n.cluster = length(unique(author_name[[i]]$AuthorID)))
+  spec_title[[i]] <- Spectral.Cluster(my.dat = paper[[i]],n.cluster = length(unique(author_name[[i]]$AuthorID)))
+  spec_journal[[i]] <- Spectral.Cluster(my.dat = journal[[i]],n.cluster = length(unique(author_name[[i]]$AuthorID)))
+}
 
-AGupta_sclust.journal <- Spectral.Cluster(my.dat=AGupta.Journal, n.cluster=length(unique(AGupta$AuthorID)))
-  
-#For AKumar
-AKumar_sclust.coauthor <- Spectral.Cluster(AKumar.Coauthor, n.cluster=length(unique(AKumar$AuthorID)))
-
-AKumar_sclust.paper <- Spectral.Cluster(AKumar.Paper, n.cluster=length(unique(AKumar$AuthorID)))
-
-AKumar_sclust.journal <- Spectral.Cluster(AKumar.Journal, n.cluster=length(unique(AKumar$AuthorID)))
-
-#For CChen
-CChen_sclust.coauthor <- Spectral.Cluster(CChen.Coauthor, n.cluster=length(unique(CChen$AuthorID)))
-
-CChen_sclust.paper <- Spectral.Cluster(CChen.Paper, n.cluster=length(unique(CChen$AuthorID)))
-
-CChen_sclust.journal <- Spectral.Cluster(CChen.Journal, n.cluster=length(unique(CChen$AuthorID)))
-
-#For DJohnson
-DJohnson_sclust.coauthor <- Spectral.Cluster(DJohnson.Coauthor, n.cluster=length(unique(DJohnson$AuthorID)))
-
-DJohnson_sclust.paper <- Spectral.Cluster(DJohnson.Paper, n.cluster=length(unique(DJohnson$AuthorID)))
-
-DJohnson_sclust.journal <- Spectral.Cluster(DJohnson.Journal, n.cluster=length(unique(DJohnson$AuthorID)))
-
-#For JLee
-JLee_sclust.coauthor <- Spectral.Cluster(JLee.Coauthor, n.cluster=length(unique(JLee$AuthorID)))
-
-JLee_sclust.paper <- Spectral.Cluster(JLee.Paper, n.cluster=length(unique(JLee$AuthorID)))
-
-JLee_sclust.journal <- Spectral.Cluster(JLee.Journal, n.cluster=length(unique(JLee$AuthorID)))
-
-#For JMartin
-JMartin_sclust.coauthor <- Spectral.Cluster(JMartin.Coauthor, n.cluster=length(unique(JMartin$AuthorID)))
-
-JMartin_sclust.paper <- Spectral.Cluster(JMartin.Paper, n.cluster=length(unique(JMartin$AuthorID)))
-
-JMartin_sclust.journal <- Spectral.Cluster(JMartin.Journal, n.cluster=length(unique(JMartin$AuthorID)))
-
-#For JRobinson
-JRobinson_sclust.coauthor <- Spectral.Cluster(JRobinson.Coauthor, n.cluster=length(unique(JRobinson$AuthorID)))
-
-JRobinson_sclust.paper <- Spectral.Cluster(JRobinson.Paper, n.cluster=length(unique(JRobinson$AuthorID)))
-
-JRobinson_sclust.journal <- Spectral.Cluster(JRobinson.Journal, n.cluster=length(unique(JRobinson$AuthorID)))
-
-#For JSmith
-JSmith_sclust.coauthor <- Spectral.Cluster(JSmith.Coauthor, n.cluster=length(unique(JSmith$AuthorID)))
-
-JSmith_sclust.paper <- Spectral.Cluster(JSmith.Paper, n.cluster=length(unique(JSmith$AuthorID)))
-
-JSmith_sclust.journal <- Spectral.Cluster(JSmith.Journal, n.cluster=length(unique(JSmith$AuthorID)))
-
-#For KTanaka
-KTanaka_sclust.coauthor <- Spectral.Cluster(KTanaka.Coauthor, n.cluster=length(unique(KTanaka$AuthorID)))
-
-KTanaka_sclust.paper <- Spectral.Cluster(KTanaka.Paper, n.cluster=length(unique(KTanaka$AuthorID)))
-
-KTanaka_sclust.journal <- Spectral.Cluster(KTanaka.Journal, n.cluster=length(unique(KTanaka$AuthorID)))
-
-#For MBrown
-MBrown_sclust.coauthor <- Spectral.Cluster(MBrown.Coauthor, n.cluster=length(unique(MBrown$AuthorID)))
-
-MBrown_sclust.paper <- Spectral.Cluster(MBrown.Paper, n.cluster=length(unique(MBrown$AuthorID)))
-
-MBrown_sclust.journal <- Spectral.Cluster(MBrown.Journal, n.cluster=length(unique(MBrown$AuthorID)))
-
-#For MJones
-MJones_sclust.coauthor <- Spectral.Cluster(MJones.Coauthor, n.cluster=length(unique(MJones$AuthorID)))
-
-MJones_sclust.paper <- Spectral.Cluster(MJones.Paper, n.cluster=length(unique(MJones$AuthorID)))
-
-MJones_sclust.journal <- Spectral.Cluster(MJones.Journal, n.cluster=length(unique(MJones$AuthorID)))
-
-#For MMiller
-MMiller_sclust.coauthor <- Spectral.Cluster(MMiller.Coauthor, n.cluster=length(unique(MMiller$AuthorID)))
-
-MMiller_sclust.paper <- Spectral.Cluster(MMiller.Paper, n.cluster=length(unique(MMiller$AuthorID)))
-
-MMiller_sclust.journal <- Spectral.Cluster(MMiller.Journal, n.cluster=length(unique(MMiller$AuthorID)))
-
-#For SLee
-SLee_sclust.coauthor <- Spectral.Cluster(SLee.Coauthor, n.cluster=length(unique(SLee$AuthorID)))
-
-SLee_sclust.paper <- Spectral.Cluster(SLee.Paper, n.cluster=length(unique(SLee$AuthorID)))
-
-SLee_sclust.journal <- Spectral.Cluster(SLee.Journal, n.cluster=length(unique(SLee$AuthorID)))
-
-#For YChen
-YChen_sclust.coauthor <- Spectral.Cluster(YChen.Coauthor, n.cluster=length(unique(YChen$AuthorID)))
-
-YChen_sclust.paper <- Spectral.Cluster(YChen.Paper, n.cluster=length(unique(YChen$AuthorID)))
-
-YChen_sclust.journal <- Spectral.Cluster(YChen.Journal, n.cluster=length(unique(YChen$AuthorID)))
 ```
 
 Second of all, we imlememnt the algorithm from paper 6 to analysis our data set. 
@@ -265,71 +137,14 @@ spec_eva <- function(author,result){
   return(as.data.frame(perform))
 }
 
+eva_df <- data.frame()
 
-AGupta.m1 = spec_eva(AGupta,AGupta_sclust.coauthor)
-AGupta.m2 = spec_eva(AGupta,AGupta_sclust.paper)
-AGupta.m3 = spec_eva(AGupta,AGupta_sclust.journal)
+for(i in 1:14){
+  eva_df <- rbind(eva_df,spec_eva(author_name[[i]],spec_coauthor[[i]]))
+  eva_df <- rbind(eva_df,spec_eva(author_name[[i]],spec_title[[i]]))
+  eva_df <- rbind(eva_df,spec_eva(author_name[[i]],spec_journal[[i]]))
+}
 
-AKumar.m1 = spec_eva(AKumar,AKumar_sclust.coauthor)
-AKumar.m2 = spec_eva(AKumar,AKumar_sclust.paper)
-AKumar.m3 = spec_eva(AKumar,AKumar_sclust.journal)
-
-CChen.m1 = spec_eva(CChen,CChen_sclust.coauthor)
-CChen.m2 = spec_eva(CChen,CChen_sclust.paper)
-CChen.m3 = spec_eva(CChen,CChen_sclust.journal)
-
-DJohnson.m1 = spec_eva(DJohnson,DJohnson_sclust.coauthor)
-DJohnson.m2 = spec_eva(DJohnson,DJohnson_sclust.paper)
-DJohnson.m3 = spec_eva(DJohnson,DJohnson_sclust.journal)
-
-JLee.m1 = spec_eva(JLee,JLee_sclust.coauthor)
-JLee.m2 = spec_eva(JLee,JLee_sclust.paper)
-JLee.m3 = spec_eva(JLee,JLee_sclust.journal)
-
-JMartin.m1 = spec_eva(JMartin,JMartin_sclust.coauthor)
-JMartin.m2 = spec_eva(JMartin,JMartin_sclust.paper)
-JMartin.m3 = spec_eva(JMartin,JMartin_sclust.journal)
-
-JRobinson.m1 = spec_eva(JRobinson,JRobinson_sclust.coauthor)
-JRobinson.m2 = spec_eva(JRobinson,JRobinson_sclust.paper)
-JRobinson.m3 = spec_eva(JRobinson,JRobinson_sclust.journal)
-
-JSmith.m1 = spec_eva(JSmith,JSmith_sclust.coauthor)
-JSmith.m2 = spec_eva(JSmith,JSmith_sclust.paper)
-JSmith.m3 = spec_eva(JSmith,JSmith_sclust.journal)
-
-KTanaka.m1 = spec_eva(KTanaka,KTanaka_sclust.coauthor)
-KTanaka.m2 = spec_eva(KTanaka,KTanaka_sclust.paper)
-KTanaka.m3 = spec_eva(KTanaka,KTanaka_sclust.journal)
-
-MBrown.m1 = spec_eva(MBrown,MBrown_sclust.coauthor)
-MBrown.m2 = spec_eva(MBrown,MBrown_sclust.paper)
-MBrown.m3 = spec_eva(MBrown,MBrown_sclust.journal)
-
-MJones.m1 = spec_eva(MJones,MJones_sclust.coauthor)
-MJones.m2 = spec_eva(MJones,MJones_sclust.paper)
-MJones.m3 = spec_eva(MJones,MJones_sclust.journal)
-
-MMiller.m1 = spec_eva(MMiller,MMiller_sclust.coauthor)
-MMiller.m2 = spec_eva(MMiller,MMiller_sclust.paper)
-MMiller.m3 = spec_eva(MMiller,MMiller_sclust.journal)
-
-SLee.m1 = spec_eva(SLee,SLee_sclust.coauthor)
-SLee.m2 = spec_eva(SLee,SLee_sclust.paper)
-SLee.m3 = spec_eva(SLee,SLee_sclust.journal)
-
-YChen.m1 = spec_eva(YChen,YChen_sclust.coauthor)
-YChen.m2 = spec_eva(YChen,YChen_sclust.paper)
-YChen.m3 = spec_eva(YChen,YChen_sclust.journal)
-
-
-eva_df <- rbind(AGupta.m1,AGupta.m2,AGupta.m3,AKumar.m1,AKumar.m2,AKumar.m3,
-                CChen.m1,CChen.m2,CChen.m3,DJohnson.m1,DJohnson.m2,DJohnson.m3,
-                JLee.m1,JLee.m2,JLee.m3,JMartin.m1,JMartin.m2,JMartin.m3,
-                JRobinson.m1,JRobinson.m2,JRobinson.m3,JSmith.m1,JSmith.m2,
-                JSmith.m3,KTanaka.m1,KTanaka.m2,KTanaka.m3,MBrown.m1,MBrown.m2,
-                MBrown.m3,MJones.m1,MJones.m2,MJones.m3,MMiller.m1,MMiller.m2,
-                MMiller.m3,SLee.m1,SLee.m2,SLee.m3,YChen.m1,YChen.m2,YChen.m3)
 
 rownames(eva_df) <- c("AGupta_coauthor","AGupta_paper","AGupta_journal",
                       "AKumar_coauthor","AKumar_paper","AKumar_journal",
@@ -352,6 +167,7 @@ eva_df
 ```
 
 
+
 For paper 6
 ```{r}
 
@@ -363,63 +179,18 @@ For paper 3
 ```{r}
 source("../lib/paper3/Misclassification.R")
 
-AGupta.m1 = Misclassification(AGupta,AGupta_sclust.coauthor)
-AGupta.m2 = Misclassification(AGupta,AGupta_sclust.paper)
-AGupta.m3 = Misclassification(AGupta,AGupta_sclust.journal)
+coauthor_mis <- vector()
+title_mis <- vector()
+journal_mis <- vector()
 
-AKumar.m1 = Misclassification(AKumar,AKumar_sclust.coauthor)
-AKumar.m2 = Misclassification(AKumar,AKumar_sclust.paper)
-AKumar.m3 = Misclassification(AKumar,AKumar_sclust.journal)
+for(i in 1:14){
+  coauthor_mis[i] <- Misclassification(author_name[[i]],spec_coauthor[[i]])
+  title_mis[i] <- Misclassification(author_name[[i]],spec_title[[i]])
+  journal_mis[i] <- Misclassification(author_name[[i]],spec_journal[[i]])
+}
 
-CChen.m1 = Misclassification(CChen,CChen_sclust.coauthor)
-CChen.m2 = Misclassification(CChen,CChen_sclust.paper)
-CChen.m3 = Misclassification(CChen,CChen_sclust.journal)
 
-DJohnson.m1 = Misclassification(DJohnson,DJohnson_sclust.coauthor)
-DJohnson.m2 = Misclassification(DJohnson,DJohnson_sclust.paper)
-DJohnson.m3 = Misclassification(DJohnson,DJohnson_sclust.journal)
-
-JLee.m1 = Misclassification(JLee,JLee_sclust.coauthor)
-JLee.m2 = Misclassification(JLee,JLee_sclust.paper)
-JLee.m3 = Misclassification(JLee,JLee_sclust.journal)
-
-JMartin.m1 = Misclassification(JMartin,JMartin_sclust.coauthor)
-JMartin.m2 = Misclassification(JMartin,JMartin_sclust.paper)
-JMartin.m3 = Misclassification(JMartin,JMartin_sclust.journal)
-
-JRobinson.m1 = Misclassification(JRobinson,JRobinson_sclust.coauthor)
-JRobinson.m2 = Misclassification(JRobinson,JRobinson_sclust.paper)
-JRobinson.m3 = Misclassification(JRobinson,JRobinson_sclust.journal)
-
-JSmith.m1 = Misclassification(JSmith,JSmith_sclust.coauthor)
-JSmith.m2 = Misclassification(JSmith,JSmith_sclust.paper)
-JSmith.m3 = Misclassification(JSmith,JSmith_sclust.journal)
-
-KTanaka.m1 = Misclassification(KTanaka,KTanaka_sclust.coauthor)
-KTanaka.m2 = Misclassification(KTanaka,KTanaka_sclust.paper)
-KTanaka.m3 = Misclassification(KTanaka,KTanaka_sclust.journal)
-
-MBrown.m1 = Misclassification(MBrown,MBrown_sclust.coauthor)
-MBrown.m2 = Misclassification(MBrown,MBrown_sclust.paper)
-MBrown.m3 = Misclassification(MBrown,MBrown_sclust.journal)
-
-MJones.m1 = Misclassification(MJones,MJones_sclust.coauthor)
-MJones.m2 = Misclassification(MJones,MJones_sclust.paper)
-MJones.m3 = Misclassification(MJones,MJones_sclust.journal)
-
-MMiller.m1 = Misclassification(MMiller,MMiller_sclust.coauthor)
-MMiller.m2 = Misclassification(MMiller,MMiller_sclust.paper)
-MMiller.m3 = Misclassification(MMiller,MMiller_sclust.journal)
-
-SLee.m1 = Misclassification(SLee,SLee_sclust.coauthor)
-SLee.m2 = Misclassification(SLee,SLee_sclust.paper)
-SLee.m3 = Misclassification(SLee,SLee_sclust.journal)
-
-YChen.m1 = Misclassification(YChen,YChen_sclust.coauthor)
-YChen.m2 = Misclassification(YChen,YChen_sclust.paper)
-YChen.m3 = Misclassification(YChen,YChen_sclust.journal)
-
-error.rate = data.frame(filename = c("AGupta","AKumar","CChen","DJohnson","JLee","JMartin","JRobinson","JSmith","KTanaka","MBrown","MJones","MMiller","SLee","YChen"), Coauthor = c(AGupta.m1[[2]],AKumar.m1[[2]],CChen.m1[[2]],DJohnson.m1[[2]],JLee.m1[[2]],JMartin.m1[[2]],JRobinson.m1[[2]],JSmith.m1[[2]],KTanaka.m1[[2]],MBrown.m1[[2]],MJones.m1[[2]],MMiller.m1[[2]],SLee.m1[[2]],YChen.m1[[2]]), Journal= c(AGupta.m2[[2]],AKumar.m2[[2]],CChen.m2[[2]],DJohnson.m2[[2]],JLee.m2[[2]],JMartin.m2[[2]],JRobinson.m2[[2]],JSmith.m2[[2]],KTanaka.m2[[2]],MBrown.m2[[2]],MJones.m2[[2]],MMiller.m2[[2]],SLee.m2[[2]],YChen.m2[[2]]), Paper=c(AGupta.m3[[2]],AKumar.m3[[2]],CChen.m3[[2]],DJohnson.m3[[2]],JLee.m3[[2]],JMartin.m3[[2]],JRobinson.m3[[2]],JSmith.m3[[2]],KTanaka.m3[[2]],MBrown.m3[[2]],MJones.m3[[2]],MMiller.m3[[2]],SLee.m3[[2]],YChen.m3[[2]]))
+error.rate = data.frame(filename = c("AGupta","AKumar","CChen","DJohnson","JLee","JMartin","JRobinson","JSmith","KTanaka","MBrown","MJones","MMiller","SLee","YChen"), Coauthor = coauthor_mis, Journal= journal_mis, Title=title_mis)
 write.csv(error.rate, file = "../output/paper3/misclassification.csv")
 ```
 ```{r}
