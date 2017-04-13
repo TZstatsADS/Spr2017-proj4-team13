@@ -2,6 +2,7 @@
 title: "Project 4 -  Main Script"
 author: "Boxuan Zhao, Zixuan Guan, Zheren Tang, Yingxin Zhang, Jihan Wei"
 date: "3/22/2017"
+geometry: margin = 0.5in
 output: 
   pdf_document: 
     latex_engine: xelatex
@@ -199,7 +200,7 @@ From the above two graphs, we can see that:
 In addition to the above evaluation, we have also observed several interesting trends for algorithm introduced in paper 6 using c2 constraint.
 
 ####Interesting results cont'd:
-![Figure 6: Interesting results](../figs/weight tuning results for paper 6.png)
+![Figure 5: Interesting results](../figs/weight tuning results for paper 6.png)
 
 
 
