@@ -17,7 +17,8 @@ Step 0: Source functions and read data:
 folder.path="../data/namecsv/"
 
 ##Sourse all functions:
-functions=list.files(path = "../lib/paper6",pattern = "*.[Rr]")for(i in 1:length(functions)){
+functions=list.files(path = "../lib/paper6",pattern = "*.[Rr]")
+for(i in 1:length(functions)){
   source(paste("../lib/paper6/",functions[i],sep=""))
 }
 
@@ -51,7 +52,7 @@ Implement of algorithms in Paper 6:
 ```{r}
 ##If you want to rerun our algorithm,please set it as TRUE:
 ##Otherwise, we will load the pre-saved answers:
-retrain<-F ##Basically for shorter time for kniting the pdf
+retrain<-T ##Basically for shorter time for kniting the pdf
 
 ####Get Constrian Matrix:
 if (retrain){
@@ -74,7 +75,7 @@ if (retrain){
   a1<-Sys.time()
   while(any(cluster!=cluster2)|(m==0)){
     cluster<-cluster2
-    M_step<-mstep(cluster=cluster,X=X,A=A,ita=0.01,weight=0)
+    M_step<-mstep(cluster=cluster,X=X,A=A,ita=0.01)
     A<-M_step$A
     centroids<-M_step$centroids
     m=m+1
@@ -91,7 +92,7 @@ if (retrain){
 Evaluation Table:
 ```{r}
 answer<-evalu(True_Author,cluster2)
-#answer
+answer
 ```
 
 
