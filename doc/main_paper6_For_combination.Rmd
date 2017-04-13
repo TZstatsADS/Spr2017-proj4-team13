@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(text2vec)
 ```
 
 #Algorithm for Paper 6 with Constrain c2:
@@ -16,9 +17,9 @@ Step 0: Source functions and read data:
 folder.path="../data/namecsv/"
 
 ##Sourse all functions:
-functions=list.files(path = "../lib2/paper6",pattern = "*.[Rr]")
+functions=list.files(path = "../lib/paper6",pattern = "*.[Rr]")
 for(i in 1:length(functions)){
-  source(paste("../lib2/paper6/",functions[i],sep=""))
+  source(paste("../lib/paper6/",functions[i],sep=""))
 }
 
 #Get all files and load them 
@@ -51,7 +52,7 @@ Implement of algorithms in Paper 6:
 ```{r}
 ##If you want to rerun our algorithm,please set it as TRUE:
 ##Otherwise, we will load the pre-saved answers:
-retrain<-FALSE  ##Basically for shorter time for kniting the pdf
+retrain<-T ##Basically for shorter time for kniting the pdf
 
 ####Get Constrian Matrix:
 if (retrain){
