@@ -84,6 +84,7 @@ for(i in 1:14){
 ```
 
 **For Paper 6:**
+
 We also used the TF-IDF matrix, but we combined all the information, and used the normalized version of the matrix. 
 
 Firstly, source functions and read data:
@@ -148,6 +149,7 @@ for(i in 1:14){
 
 
 **For Paper 6:**
+
 We implememnt the algorithm from paper 6 to analysis our data set.
 
 ```{r}
@@ -239,10 +241,13 @@ rownames(eva_df) <- c("AGupta_coauthor","AGupta_paper","AGupta_journal",
                       "YChen_coauthor","YChen_paper","YChen_journal")
 write.csv(eva_df, file = "../output/paper3/eva.csv")
 ```
+**Result For Paper3:**
 
 ```{r}
 eva_df
 ```
+**Result For Paper6:**
+
 Then we implement the code we written from paper 6 for the evaluation
 ```{r}
 #answer_eva<-evalu(True_Author,cluster2)
@@ -252,6 +257,7 @@ Then we implement the code we written from paper 6 for the evaluation
 ![Figure 1: Evaluation results](../figs/Paper6_Results.png)
 
 
+**Comparasion between two methods:**
 
 Then we start to compare the two papers using same evaluation methods. Since we do not want to produce a length report, we only use some of the data set to demonstrate what we foud during the development of this project
 
@@ -260,14 +266,13 @@ First of all, we compare two algorithms using each of the three feautres(Coautho
 ####AKumar data set results:
 ![Figure 2: Evaluation results](../figs/AKumar_Comparasion3.png)
 
-From the above graph, we can observe that:
 
 Then, we also compare the two algorithm using a different data set KTanaka:
 
 ####KTanaka data set results:
 ![Figure 3: Evaluation results](../figs/KTanaka_Comparasion3.png)
 
-From the above graph, we can see that:
+From the above two graphs, we can see that: 
 
 We also have compared the two algorithms using all features:
 
