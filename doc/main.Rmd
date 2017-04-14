@@ -9,7 +9,8 @@ output:
 ---
 #ABSTRACT
 
-In this project, our team was assigned two papers that proposed two algorithms concerning name disambiguations and we implmented these two algorithms in R code and we have also proposed evaluation methods to compare these algorithms. Throughout the process of this project, we have observed several interesting trends. In this file, we will present our data reading, preporcessing, algorithm implements as well as evaluation results.
+In this project, our team was assigned two papers (Paper 3 and Paper 6) that proposed two algorithms concerning name disambiguation and we implemented these two algorithms in R code and we have also proposed evaluation methods to compare these algorithms. Generally, Paper 3 discussed the Spectral Clustering using QR decomposition and Paper 6 proposed a constraint-Based Probabilistic Framework. For evaluation, we compared the two methods based on the results from the Confusion Matrix and the running time.In this file, we will present our data reading, preprocessing, algorithm implements as well as evaluation results. Also, further discussion for Paper 6 will also be included. 
+
 
 
 ## Step 0: Load the packages, specify directories
