@@ -83,7 +83,7 @@ for(i in 1:14){
 }
 ```
 
-*For Paper 6:*
+**For Paper 6:**
 
 Firstly, source functions and read data:
 
