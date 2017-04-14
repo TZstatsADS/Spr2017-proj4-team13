@@ -128,6 +128,8 @@ Split_coauthor<-split_coauthor(data)
 
 ## Step 3: Clustering
 
+**For Paper 3:**
+
 First of all, we perofrom the spectral cluster with QR decomposition on the data sets
 
 ```{r}
@@ -144,7 +146,9 @@ for(i in 1:14){
 
 ```
 
-Second of all, we implememnt the algorithm from paper 6 to analysis our data set.
+
+**For Paper 6:**
+We implememnt the algorithm from paper 6 to analysis our data set.
 
 ```{r}
 ##If you want to rerun our algorithm,please set it as TRUE:
