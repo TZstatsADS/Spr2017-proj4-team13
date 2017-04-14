@@ -17,7 +17,7 @@ In this project, our team was assigned two papers that proposed two algorithms c
 ```{r}
 ##########################################################################################################
 # Here replace it with your own path or manually set it in RStudio to the lib folder                     #
-setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/Spr2017-proj4-team13/lib")#
+setwd("D:/Columbia University/Spring2017-Applied Data Science/Project_4_Bz2290/Spr2017-proj4-team13/lib")
 ##########################################################################################################
 
 #Relevant packages
@@ -82,10 +82,43 @@ for(i in 1:14){
 ```
 
 For Paper 6
-```{r}
 
+Firstly, source functions and read data:
+```{r,warning=FALSE,echo=FALSE}
+######Preparetion,Data Loading and Preliminary Analysis######
+folder.path="../data/namecsv/"
+
+##Sourse all functions:
+functions=list.files(path = "../lib/paper6",pattern = "*.[Rr]")
+for(i in 1:length(functions)){
+  source(paste("../lib/paper6/",functions[i],sep=""))
+}
+
+#Get all files and load them 
+authores=list.files(path = folder.path, pattern = "*.csv")
+authores<-substr(authores, start=1, stop=nchar(authores)-4)
+
+rawdata<-as.list(1:length(authores))
+names(rawdata)<-authores
+
+for (i in authores){
+   rawdata[[i]]<-read.csv(paste(folder.path,i,".csv",sep = ""),header = T,as.is=T)
+}
+
+##change the raw data to matrixes:
+X_all<-lapply(rawdata,Create_X)
 ```
 
+Then we can choose the interested author:
+```{r,echo=FALSE}
+##chosen is the user-specified data set name
+chosen<-"MBrown"
+
+data<-rawdata[[chosen]]
+X<-X_all[[chosen]]
+True_Author<-data$AuthorID
+Split_coauthor<-split_coauthor(data)
+```
 
 
 ## Step 3: Clustering
@@ -105,9 +138,46 @@ for(i in 1:14){
 
 ```
 
-Second of all, we implememnt the algorithm from paper 6 to analysis our data set. 
-```{r}
+Second of all, we implememnt the algorithm from paper 6 to analysis our data set.
 
+```{r}
+##If you want to rerun our algorithm,please set it as TRUE:
+##Otherwise, we will load the pre-saved answers:
+retrain<-F ##Basically for shorter time for kniting the pdf
+
+####Get Constrian Matrix:
+if (retrain){
+  n<-nrow(X)
+  Constraint<-matrix(NA,n,n)
+  
+  for(i in 1:n){
+  Constraint[i,]<-sapply(1:n,constraint,paper2=i,Split_coauthor)
+  }
+  
+  ##Initilization:
+  answer<-initialization(data,X)
+
+  ##EM Steps:
+  cluster<-answer$cluster
+  cluster2<-cluster
+  A<-answer$A
+  m=0
+
+  a1<-Sys.time()
+  while(any(cluster!=cluster2)|(m==0)){
+    cluster<-cluster2
+    M_step<-mstep(cluster=cluster,X=X,A=A,ita=0.01)
+    A<-M_step$A
+    centroids<-M_step$centroids
+    m=m+1
+  
+    cluster2<-estep_fixed_clusters2(cluster=cluster,X=X,centroids=centroids,A=A)
+    cluster2<-as.numeric(factor(cluster2))
+    }
+  a2<-Sys.time()
+  cat("The training time is",a2-a1)
+  cat("The iteration number is",m)
+} 
 ```
 
 ## Step 4: Evaluation
@@ -165,8 +235,10 @@ eva_df
 ```
 Then we implement the code we written from paper 6 for the evaluation
 ```{r}
-
+#answer_eva<-evalu(True_Author,cluster2)
 ```
+####Paper 6 evaluation results:
+![Figure 1: Evaluation results](../figs/Paper6_Reaults.png)
 
 
 Then we start to compare the two papers using same evaluation methods. Since we do not want to produce a length report, we only use some of the data set to demonstrate what we foud during the development of this project
@@ -174,24 +246,24 @@ Then we start to compare the two papers using same evaluation methods. Since we 
 First of all, we compare two algorithms using each of the three feautres(Coauthor, Paper, Journal) using AKumar data set:
 
 ####AKumar data set results:
-![Figure 1: Evaluation results](../figs/AKumar_Comparasion3.png)
+![Figure 2: Evaluation results](../figs/AKumar_Comparasion3.png)
 
 From the above graph, we can observe that:
 
 Then, we also compare the two algorithm using a different data set KTanaka:
 
 ####KTanaka data set results:
-![Figure 2: Evaluation results](../figs/KTanaka_Comparasion3.png)
+![Figure 3: Evaluation results](../figs/KTanaka_Comparasion3.png)
 
 From the above graph, we can see that:
 
 We also have compared the two algorithms using all features:
 
 ####JMartin data set results:
-![Figure 3: Evaluation results](../figs/JMartin_Comparasion.png)
+![Figure 4: Evaluation results](../figs/JMartin_Comparasion.png)
 
 ####MBrown data set results:
-![Figure 4: Evaluation results](../figs/MBrown_Comparasion.png)
+![Figure 5: Evaluation results](../figs/MBrown_Comparasion.png)
 
 From the above two graphs, we can see that:
 
@@ -200,18 +272,21 @@ From the above two graphs, we can see that:
 In addition to the above evaluation, we have also observed several interesting trends for algorithm introduced in paper 6 using c2 constraint.
 
 ####Interesting results cont'd:
-![Figure 5: Interesting results](../figs/weight tuning results for paper 6.png)
-
+![Figure 6: Interesting results](../figs/weight tuning results for paper 6.png)
+From tuning the first 50 lines for author MBrown, we figured out that the smaller the weight, the better the result.Although we get this conclusion, there should still be further discussions about how to set weight value if we could do deeper optimization.
 
 
 
 ####Interesting results cont'd:
-![Figure 6: Interesting results](../figs/Scaled_vs_Unscaled_X.png)
+![Figure 7: Interesting results](../figs/Scaled_vs_Unscalued.png)
+After carefully reading and discussing paper6, we first create an initial algorithm.
+But the result does not have a high accuracy, then we found out that the problem may happens since the X matrix is too sparse. Considering the equation of updating each parameter amm in A, we scaled X matrix, to made the differentiating function more reliable. After this optimization, we finally found that we could get better result as we hope to.
 
 ####Interesting results cont'd:
-![Figure 7: Interesting results](../figs/Weigt_0vs1.png)
+![Figure 8: Interesting results](../figs/weight_0.01_vs_1.png)
 
 
+Since we found that after EM algorithm, the accuracy does not approve a lot, then we found out that the problem may happens since we initial weight value as 1. Considering the larger the weight, the greater the impact of the constraint is, we reset the weight value to 0.1.
 
 
 
