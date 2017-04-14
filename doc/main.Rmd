@@ -282,11 +282,11 @@ We also have compared the two algorithms using all features:
 ####MBrown data set results:
 ![Figure 5: Evaluation results](../figs/MBrown_Comparasion.png)
 
-From the above two graphs, we can see that:
+From the above two graphs, we can see that: When utilizing all Coauthor, Paper and Journal information, the performance of paper 6 increased. In terms of F1 and the accuracy, Paper 6 are much better. However, for paper 3. the running time is much faster, with acceptable performance. Therefore, the consumer may choose the method based on their needs.
 
 ## Step 5 Further Observations of methods in paper 6
 
-In addition to the above evaluation, we have also observed several interesting trends for algorithm introduced in paper 6 using c2 constraint.
+In addition to the above evaluation, we have also observed several interesting observations for algorithm introduced in paper 6 using c2 constraint.
 
 ####Interesting results cont'd:
 ![Figure 6: Interesting results](../figs/weight tuning results for paper 6.png)
