@@ -84,7 +84,7 @@ for(i in 1:14){
 For Paper 6
 
 Firstly, source functions and read data:
-```{r,warning=FALSE,echo=FALSE}
+```{r,warning=FALSE}
 ######Preparetion,Data Loading and Preliminary Analysis######
 folder.path="../data/namecsv/"
 
@@ -110,7 +110,7 @@ X_all<-lapply(rawdata,Create_X)
 ```
 
 Then we can choose the interested author:
-```{r,echo=FALSE}
+```{r}
 ##chosen is the user-specified data set name
 chosen<-"MBrown"
 
@@ -175,7 +175,7 @@ if (retrain){
     cluster2<-as.numeric(factor(cluster2))
     }
   a2<-Sys.time()
-  cat("The training time is",a2-a1,"/n")
+  cat("The training time is",a2-a1)
   cat("The iteration number is",m)
 } 
 ```
@@ -242,6 +242,7 @@ Then we implement the code we written from paper 6 for the evaluation
 ![Figure 1: Evaluation results](../figs/Paper6_Results.png)
 
 
+
 Then we start to compare the two papers using same evaluation methods. Since we do not want to produce a length report, we only use some of the data set to demonstrate what we foud during the development of this project
 
 First of all, we compare two algorithms using each of the three feautres(Coauthor, Paper, Journal) using AKumar data set:
@@ -274,7 +275,7 @@ In addition to the above evaluation, we have also observed several interesting t
 
 ####Interesting results cont'd:
 ![Figure 6: Interesting results](../figs/weight tuning results for paper 6.png)
-From randomly choose 50 lines for author MBrown for tuning the value for weight, we figured out that the smaller the weight, the better the result.Although we get this conclusion, there should still be further discussions about how to set weight value if we could do deeper optimization.
+From tuning the first 50 lines for author MBrown, we figured out that the smaller the weight, the better the result.Although we get this conclusion, there should still be further discussions about how to set weight value if we could do deeper optimization.
 
 
 
