@@ -63,7 +63,7 @@ $$
 \end{aligned}
 $$
 
-## For Paper 3:
+** For Paper 3:**
 
 Construct our feature design for paper 3 with resepct to Coauthor, Title and Journal
 
@@ -274,7 +274,7 @@ We also have compared the two algorithms using all features:
 
 From the above two graphs, we can see that:
 
-#Step 5 Further Observations of methods in paper 6
+## Step 5 Further Observations of methods in paper 6
 
 In addition to the above evaluation, we have also observed several interesting trends for algorithm introduced in paper 6 using c2 constraint.
 
