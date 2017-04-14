@@ -16,15 +16,8 @@ Term: Spring 2017
 	
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
-Boxuan Zhao: Work on Paper 3 , implement the algorithm and prepare for the presentation
-
-Zixuan Guan: Clean all the data, work on Paper 6, implement the algorithms 
-
-Zheren Tang: Work on Paper 3 and evaluate the algorithm 
-
-Jihan Wei: Work on Paper 6, implement the algorithm and evaluation
-
-Yingxin Zhang: Work on Paper 6,  implement the algorithm and evaluation
+Paper3: Boxuan Zhao(PPT), Zheren Tang
+Paper6: Zixuan Guan, Jihan Wei, Yingxin Zhang
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
