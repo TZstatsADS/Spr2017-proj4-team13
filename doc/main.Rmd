@@ -175,7 +175,7 @@ if (retrain){
     cluster2<-as.numeric(factor(cluster2))
     }
   a2<-Sys.time()
-  cat("The training time is",a2-a1)
+  cat("The training time is",a2-a1,"/n")
   cat("The iteration number is",m)
 } 
 ```
