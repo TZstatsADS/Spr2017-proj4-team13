@@ -288,18 +288,18 @@ From the above two graphs, we can see that: When utilizing all Coauthor, Paper a
 
 In addition to the above evaluation, we have also observed several interesting observations for algorithm introduced in paper 6 using c2 constraint.
 
-**What is the optimal weight?:**
+**What is the optimal weight?:(Figure 6)**
 ![Figure 6: Interesting results](../figs/weight tuning results for paper 6.png)
 
 From tuning the first 50 lines for author MBrown, we figured out that the smaller the weight, the better the result.Although we get this conclusion, there should still be further discussions about how to set weight value if we could do deeper optimization.
 
-**Discussion of weight cont'd:**
+**Discussion of weight cont'd:(Figure 7)**
 ![Figure 7: Interesting results](../figs/weight_0.01_vs_1.png)
 
 
 Since we found that after EM algorithm, the accuracy does not approve a lot, then we found out that the problem may happens since we initial weight value as 1. Considering the larger the weight, the greater the impact of the constraint is, we reset the weight value to 0.01.
 
-**Normalized vs. Unormalized X?:**
+**Normalized vs. Unormalized X?:(Figure 8)**
 
 ![Figure 8: Interesting results](../figs/Scaled_vs_Unscalued.png)
 
