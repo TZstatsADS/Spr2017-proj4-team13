@@ -1,0 +1,98 @@
+---
+title: "Untitled"
+author: "Jihan Wei (jw3447)"
+date: "2017.4.12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Algorithm for Paper 6 with Constrain c2:
+Step 0: Source functions and read data:
+```{r,warning=FALSE,echo=FALSE}
+######Preparetion,Data Loading and Preliminary Analysis######
+folder.path="../data/namecsv/"
+
+##Sourse all functions:
+functions=list.files(path = "../lib/paper6",pattern = "*.[Rr]")
+for(i in 1:length(functions)){
+  source(paste("../lib2/paper6/",functions[i],sep=""))
+}
+
+#Get all files and load them 
+authores=list.files(path = folder.path, pattern = "*.csv")
+authores<-substr(authores, start=1, stop=nchar(authores)-4)
+
+rawdata<-as.list(1:length(authores))
+names(rawdata)<-authores
+
+for (i in authores){
+   rawdata[[i]]<-read.csv(paste(folder.path,i,".csv",sep = ""),header = T,as.is=T)
+}
+
+##change the raw data to matrixes:
+X_all<-lapply(rawdata,Create_X)
+```
+
+We can choose the interested author:
+```{r,echo=FALSE}
+##chosen is the user-specified data set name
+chosen<-"MBrown"
+
+data<-rawdata[[chosen]]
+X<-X_all[[chosen]]
+True_Author<-data$AuthorID
+Split_coauthor<-split_coauthor(data)
+```
+
+Implement of algorithms in Paper 6:
+```{r}
+##If you want to rerun our algorithm,please set it as TRUE:
+##Otherwise, we will load the pre-saved answers:
+retrain<-FALSE  ##Basically for shorter time for kniting the pdf
+
+####Get Constrian Matrix:
+if (retrain){
+  n<-nrow(X)
+  Constraint<-matrix(NA,n,n)
+  
+  for(i in 1:n){
+  Constraint[i,]<-sapply(1:n,constraint,paper2=i,Split_coauthor)
+  }
+  
+  ##Initilization:
+  answer<-initialization(data,X)
+
+  ##EM Steps:
+  cluster<-answer$cluster
+  cluster2<-cluster
+  A<-answer$A
+  m=0
+
+  a1<-Sys.time()
+  while(any(cluster!=cluster2)|(m==0)){
+    cluster<-cluster2
+    M_step<-mstep(cluster=cluster,X=X,A=A,ita=0.01,weight=0)
+    A<-M_step$A
+    centroids<-M_step$centroids
+    m=m+1
+  
+    cluster2<-estep_fixed_clusters2(cluster=cluster,X=X,centroids=centroids,A=A)
+    cluster2<-as.numeric(factor(cluster2))
+    }
+  a2<-Sys.time()
+  cat("The training time is",a2-a1)
+  cat("The iteration number is",m)
+} 
+```
+
+Evaluation Table:
+```{r}
+answer<-evalu(True_Author,cluster2)
+#answer
+```
+
+
+
