@@ -288,23 +288,25 @@ From the above two graphs, we can see that: When utilizing all Coauthor, Paper a
 
 In addition to the above evaluation, we have also observed several interesting observations for algorithm introduced in paper 6 using c2 constraint.
 
-####Interesting results cont'd:
+**What is the optimal weight?:**
 ![Figure 6: Interesting results](../figs/weight tuning results for paper 6.png)
 
 From tuning the first 50 lines for author MBrown, we figured out that the smaller the weight, the better the result.Although we get this conclusion, there should still be further discussions about how to set weight value if we could do deeper optimization.
 
-
-
-####Interesting results cont'd:
-![Figure 7: Interesting results](../figs/Scaled_vs_Unscalued.png)
-After carefully reading and discussing paper6, we first create an initial algorithm.
-But the result does not have a high accuracy, then we found out that the problem may happens since the X matrix is too sparse. Considering the equation of updating each parameter amm in A, we scaled X matrix, to made the differentiating function more reliable. After this optimization, we finally found that we could get better result as we hope to.
-
-####Interesting results cont'd:
-![Figure 8: Interesting results](../figs/weight_0.01_vs_1.png)
+**Discussion of weight cont'd:**
+![Figure 7: Interesting results](../figs/weight_0.01_vs_1.png)
 
 
 Since we found that after EM algorithm, the accuracy does not approve a lot, then we found out that the problem may happens since we initial weight value as 1. Considering the larger the weight, the greater the impact of the constraint is, we reset the weight value to 0.01.
+
+**Normalized vs. Unormalized X?:**
+
+![Figure 8: Interesting results](../figs/Scaled_vs_Unscalued.png)
+
+After carefully reading and discussing paper6, we first create an initial algorithm.
+But the result does not have a high accuracy, then we found out that the problem may happens since the X matrix is too sparse. Considering the equation of updating each parameter amm in A, we scaled X matrix, to made the differentiating function more reliable. After this optimization, we finally found that we could get better result as we hope to.
+
+
 
 
 
