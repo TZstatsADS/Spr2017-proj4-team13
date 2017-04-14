@@ -237,8 +237,9 @@ Then we implement the code we written from paper 6 for the evaluation
 ```{r}
 #answer_eva<-evalu(True_Author,cluster2)
 ```
+
 ####Paper 6 evaluation results:
-![Figure 1: Evaluation results](../figs/Paper6_Reaults.png)
+![Figure 1: Evaluation results](../figs/Paper6_Results.png)
 
 
 Then we start to compare the two papers using same evaluation methods. Since we do not want to produce a length report, we only use some of the data set to demonstrate what we foud during the development of this project
