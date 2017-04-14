@@ -272,7 +272,7 @@ Then, we also compare the two algorithm using a different data set KTanaka:
 ####KTanaka data set results:
 ![Figure 3: Evaluation results](../figs/KTanaka_Comparasion3.png)
 
-From the above two graphs, we can see that: 
+From the above two graphs, we can see that: In general, paper 3 is much faster than paper 6, and they both have satisfactory results. When only utilizing the coauthor information, Paper 3 seems to outperform Paper 6, while for Paper and Journal, Paper 6 has better performance.
 
 We also have compared the two algorithms using all features:
 
