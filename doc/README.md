@@ -4,4 +4,4 @@
 
 The doc directory contains the report or presentation files. It can have subfolders.  
 
-Our evaluation report is "main.pdf", where relevant script can be found in "main.rmd". The R notebook edition is also provided, where the code can be hidden.
+Our evaluation report is "main.pdf", where relevant script can be found in "main.rmd". 、
