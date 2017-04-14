@@ -4,4 +4,5 @@
 
 The doc directory contains the report or presentation files. It can have subfolders.  
 
-Our evaluation report is "main.pdf", where relevant script can be found in "main.rmd". 、
+Our evaluation report is "main.pdf", where relevant script can be found in "main.rmd". 
+The ppt used for presentation can also be found here.
