@@ -63,7 +63,7 @@ $$
 \end{aligned}
 $$
 
-** For Paper 3:**
+**For Paper 3:**
 
 Construct our feature design for paper 3 with resepct to Coauthor, Title and Journal
 
@@ -84,6 +84,7 @@ for(i in 1:14){
 ```
 
 **For Paper 6:**
+We also used the TF-IDF matrix, but we combined all the information, and used the normalized version of the matrix. 
 
 Firstly, source functions and read data:
 
