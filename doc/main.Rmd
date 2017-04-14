@@ -276,6 +276,7 @@ In addition to the above evaluation, we have also observed several interesting t
 
 ####Interesting results cont'd:
 ![Figure 6: Interesting results](../figs/weight tuning results for paper 6.png)
+
 From tuning the first 50 lines for author MBrown, we figured out that the smaller the weight, the better the result.Although we get this conclusion, there should still be further discussions about how to set weight value if we could do deeper optimization.
 
 
