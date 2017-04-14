@@ -288,7 +288,7 @@ But the result does not have a high accuracy, then we found out that the problem
 ![Figure 8: Interesting results](../figs/weight_0.01_vs_1.png)
 
 
-Since we found that after EM algorithm, the accuracy does not approve a lot, then we found out that the problem may happens since we initial weight value as 1. Considering the larger the weight, the greater the impact of the constraint is, we reset the weight value to 0.1.
+Since we found that after EM algorithm, the accuracy does not approve a lot, then we found out that the problem may happens since we initial weight value as 1. Considering the larger the weight, the greater the impact of the constraint is, we reset the weight value to 0.01.
 
 
 
