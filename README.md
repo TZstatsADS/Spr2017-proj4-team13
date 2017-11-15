@@ -12,7 +12,7 @@ Term: Spring 2017
 	+ team member 3 : Zheren Tang
 	+ team member 4 : Jihan Wei
 	+ team member 5 : Yingxin Zhang
-+ Project summary: In this project, we were assigned two papers which state two algorithms foucsing on author name disambiguation. We reproduced each algorithm following instructions from the papers, evaluated these two algorithms with evaluation metrics. We also come up with our own methods to compare and evalute the two algorithms.
++ Project summary: In this project, we were assigned two papers which state two algorithms focusing on author name disambiguation. We reproduced each algorithm following instructions from the papers, evaluated these two algorithms with evaluation matrices. We also come up with our own methods to compare and evalute the two algorithms.
 	
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
